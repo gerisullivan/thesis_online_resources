@@ -1,0 +1,243 @@
+DATASET_COLORSTRIP
+#In colored strip datasets  each ID is associated to a color box/strip and can have an optional label. Color can be specified in hexadecimal  RGB or RGBA notation. When using RGB or RGBA notation  you cannot use COMMA as the dataset separator
+
+#lines starting with a hash are comments and ignored during parsing
+
+#=================================================================#
+#                    MANDATORY SETTINGS                           #
+#=================================================================#
+#select the separator which is used to delimit the data below (TAB SPACE or COMMA).This separator must be used throughout this file (except in the SEPARATOR line  which uses space).
+
+SEPARATOR TAB
+#SEPARATOR COMMA
+#SEPARATOR SPACE
+
+#label is used in the legend table (can be changed later)
+DATASET_LABEL	available?
+
+#dataset color (can be changed later)
+COLOR	#f00001
+
+#=================================================================#
+#                    OPTIONAL SETTINGS                            #
+#=================================================================#
+
+#If COLOR_BRANCHES is set to 1  branches of the tree will be colored according to the colors of the strips above the leaves.
+#When all children of a node have the same color  it will be colored the same  ie. the color will propagate inwards towards the root.
+COLOR_BRANCHES	0
+
+#each dataset can have a legend  which is defined below
+#for each row in the legend  there should be one shape  color and label
+#shape should be a number between 1 and 6:
+#1: square
+#2: circle
+#3: star
+#4: right pointing triangle
+#5: left pointing triangle
+#6: checkmark
+
+LEGEND_TITLE	Available?
+LEGEND_SHAPES	1	1
+LEGEND_COLORS	#00ff00	#ff0000
+LEGEND_LABELS	yes	no
+
+#=================================================================#
+#     all other optional settings can be set or changed later     #
+#           in the web interface (under 'Datasets' tab)           #
+#=================================================================#
+
+#width of the colored strip
+#STRIP_WIDTH 25
+
+#left margin  used to increase/decrease the spacing to the next dataset. Can be negative  causing datasets to overlap.
+#MARGIN 0
+
+#border width; if set above 0  a border of specified width (in pixels) will be drawn around the color strip 
+#BORDER_WIDTH 0
+
+#border color; used when BORDER_WIDTH is above 0
+#BORDER_COLOR #0000ff
+
+#always show internal values; if set  values associated to internal nodes will be displayed even if these nodes are not collapsed. It could cause overlapping in the dataset display.
+#SHOW_INTERNAL 0
+
+
+#Internal tree nodes can be specified using IDs directly  or using the 'last common ancestor' method described in iTOL help pages
+
+#=================================================================#
+#       Actual data follows after the "DATA" keyword              #
+#=================================================================#
+DATA
+
+#Examples:
+#assign a red colored strip to leaf 9606  with label 'Human' (label is displayed in the mouseover popups)
+#9606 #ff0000 Human
+
+#assign a green  semi-transparent (alpha 0.5) strip to an internal node  without any label. If 'Show internal values' is set to 'No'  this will only be displayed if the node is collapsed. 
+#9606|5664 rgba(0 255 0 0.5)
+
+1	#ff0000	no
+3	#ff0000	no
+4	#00ff00	yes
+5	#ff0000	no
+6	#ff0000	no
+7	#ff0000	no
+8	#ff0000	no
+9	#ff0000	no
+10	#ff0000	no
+11	#ff0000	no
+12	#ff0000	no
+13	#ff0000	no
+14	#ff0000	no
+15	#ff0000	no
+16	#ff0000	no
+17	#ff0000	no
+18	#ff0000	no
+19	#00ff00	yes
+20	#ff0000	no
+22	#ff0000	no
+23	#ff0000	no
+24	#ff0000	no
+25	#ff0000	no
+26	#ff0000	no
+27	#ff0000	no
+28	#ff0000	no
+29	#ff0000	no
+30	#ff0000	no
+31	#ff0000	no
+32	#ff0000	no
+33	#ff0000	no
+34	#ff0000	no
+35	#ff0000	no
+36	#ff0000	no
+37	#00ff00	yes
+39	#00ff00	yes
+40	#00ff00	yes
+41	#00ff00	yes
+42	#00ff00	yes
+43	#00ff00	yes
+44	#00ff00	yes
+45	#00ff00	yes
+46	#00ff00	yes
+47	#00ff00	yes
+48	#00ff00	yes
+49	#00ff00	yes
+50	#00ff00	yes
+51	#00ff00	yes
+52	#00ff00	yes
+53	#ff0000	no
+54	#00ff00	yes
+55	#00ff00	yes
+56	#00ff00	yes
+57	#ff0000	no
+58	#00ff00	yes
+60	#ff0000	no
+61	#ff0000	no
+62	#ff0000	no
+63	#00ff00	yes
+64	#ff0000	no
+65	#ff0000	no
+66	#ff0000	no
+67	#ff0000	no
+68	#ff0000	no
+69	#ff0000	no
+70	#ff0000	no
+71	#ff0000	no
+72	#ff0000	no
+73	#ff0000	no
+74	#00ff00	yes
+76	#00ff00	yes
+77	#ff0000	no
+78	#ff0000	no
+80	#00ff00	yes
+81	#00ff00	yes
+82	#00ff00	yes
+83	#00ff00	yes
+84	#00ff00	yes
+85	#00ff00	yes
+86	#00ff00	yes
+87	#00ff00	yes
+88	#00ff00	yes
+89	#00ff00	yes
+90	#00ff00	yes
+91	#00ff00	yes
+92	#ff0000	no
+93	#ff0000	no
+94	#00ff00	yes
+95	#00ff00	yes
+97	#00ff00	yes
+98	#00ff00	yes
+99	#00ff00	yes
+100	#00ff00	yes
+101	#00ff00	yes
+102	#00ff00	yes
+103	#00ff00	yes
+104	#00ff00	yes
+105	#00ff00	yes
+106	#00ff00	yes
+107	#00ff00	yes
+108	#00ff00	yes
+109	#00ff00	yes
+110	#00ff00	yes
+111	#00ff00	yes
+112	#00ff00	yes
+113	#00ff00	yes
+115	#00ff00	yes
+116	#00ff00	yes
+117	#00ff00	yes
+118	#00ff00	yes
+119	#00ff00	yes
+120	#00ff00	yes
+121	#00ff00	yes
+122	#00ff00	yes
+123	#00ff00	yes
+124	#00ff00	yes
+125	#00ff00	yes
+126	#00ff00	yes
+127	#00ff00	yes
+128	#00ff00	yes
+129	#00ff00	yes
+130	#00ff00	yes
+131	#00ff00	yes
+132	#00ff00	yes
+133	#00ff00	yes
+134	#00ff00	yes
+135	#00ff00	yes
+136	#00ff00	yes
+138	#00ff00	yes
+139	#00ff00	yes
+140	#00ff00	yes
+141	#00ff00	yes
+142	#00ff00	yes
+143	#00ff00	yes
+144	#00ff00	yes
+145	#00ff00	yes
+146	#00ff00	yes
+147	#00ff00	yes
+148	#00ff00	yes
+149	#00ff00	yes
+150	#00ff00	yes
+151	#00ff00	yes
+152	#00ff00	yes
+153	#00ff00	yes
+154	#00ff00	yes
+155	#00ff00	yes
+156	#00ff00	yes
+157	#00ff00	yes
+158	#00ff00	yes
+159	#00ff00	yes
+160	#00ff00	yes
+161	#00ff00	yes
+162	#00ff00	yes
+163	#00ff00	yes
+164	#00ff00	yes
+165	#00ff00	yes
+166	#00ff00	yes
+167	#00ff00	yes
+168	#00ff00	yes
+169	#00ff00	yes
+170	#00ff00	yes
+171	#00ff00	yes
+172	#00ff00	yes
+173	#00ff00	yes
+174	#00ff00	yes

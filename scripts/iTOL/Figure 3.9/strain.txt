@@ -1,0 +1,243 @@
+DATASET_COLORSTRIP
+#In colored strip datasets  each ID is associated to a color box/strip and can have an optional label. Color can be specified in hexadecimal  RGB or RGBA notation. When using RGB or RGBA notation  you cannot use COMMA as the dataset separator
+
+#lines starting with a hash are comments and ignored during parsing
+
+#=================================================================#
+#                    MANDATORY SETTINGS                           #
+#=================================================================#
+#select the separator which is used to delimit the data below (TAB SPACE or COMMA).This separator must be used throughout this file (except in the SEPARATOR line  which uses space).
+
+SEPARATOR TAB
+#SEPARATOR COMMA
+#SEPARATOR SPACE
+
+#label is used in the legend table (can be changed later)
+DATASET_LABEL	strain
+
+#dataset color (can be changed later)
+COLOR	#008080
+
+#=================================================================#
+#                    OPTIONAL SETTINGS                            #
+#=================================================================#
+
+#If COLOR_BRANCHES is set to 1  branches of the tree will be colored according to the colors of the strips above the leaves.
+#When all children of a node have the same color  it will be colored the same  ie. the color will propagate inwards towards the root.
+COLOR_BRANCHES	0
+
+#each dataset can have a legend  which is defined below
+#for each row in the legend  there should be one shape  color and label
+#shape should be a number between 1 and 6:
+#1: square
+#2: circle
+#3: star
+#4: right pointing triangle
+#5: left pointing triangle
+#6: checkmark
+
+LEGEND_TITLE	strain
+LEGEND_SHAPES	1	1	1	1	1	1	1	1	1
+LEGEND_COLORS	#ebd15f	#9d63cb	#5cab47	#c55d93	#11351c	#ce632f	#008aff	#98894c	#fa0045		
+LEGEND_LABELS	BIOS-U3-1	BL107	CC9311	CC9605	CC9902	MITS9220	WH8102	WH8109	phage
+
+#=================================================================#
+#     all other optional settings can be set or changed later     #
+#           in the web interface (under 'Datasets' tab)           #
+#=================================================================#
+
+#width of the colored strip
+#STRIP_WIDTH 25
+
+#left margin  used to increase/decrease the spacing to the next dataset. Can be negative  causing datasets to overlap.
+#MARGIN 0
+
+#border width; if set above 0  a border of specified width (in pixels) will be drawn around the color strip 
+#BORDER_WIDTH 0
+
+#border color; used when BORDER_WIDTH is above 0
+#BORDER_COLOR #0000ff
+
+#always show internal values; if set  values associated to internal nodes will be displayed even if these nodes are not collapsed. It could cause overlapping in the dataset display.
+#SHOW_INTERNAL 0
+
+
+#Internal tree nodes can be specified using IDs directly  or using the 'last common ancestor' method described in iTOL help pages
+
+#=================================================================#
+#       Actual data follows after the "DATA" keyword              #
+#=================================================================#
+DATA
+
+#Examples:
+#assign a red colored strip to leaf 9606  with label 'Human' (label is displayed in the mouseover popups)
+#9606 #ff0000 Human
+
+#assign a green  semi-transparent (alpha 0.5) strip to an internal node  without any label. If 'Show internal values' is set to 'No'  this will only be displayed if the node is collapsed. 
+#9606|5664 rgba(0 255 0 0.5)
+
+1	#ebd15f	BIOS-U3-1
+3	#ebd15f	BIOS-U3-1
+4	#ebd15f	BIOS-U3-1
+5	#ebd15f	BIOS-U3-1
+6	#ebd15f	BIOS-U3-1
+7	#ebd15f	BIOS-U3-1
+8	#ebd15f	BIOS-U3-1
+9	#ebd15f	BIOS-U3-1
+10	#ebd15f	BIOS-U3-1
+11	#ebd15f	BIOS-U3-1
+12	#ebd15f	BIOS-U3-1
+13	#ebd15f	BIOS-U3-1
+14	#ebd15f	BIOS-U3-1
+15	#ebd15f	BIOS-U3-1
+16	#ebd15f	BIOS-U3-1
+17	#ebd15f	BIOS-U3-1
+18	#ebd15f	BIOS-U3-1
+19	#ebd15f	BIOS-U3-1
+20	#ebd15f	BIOS-U3-1
+22	#9d63cb	BL107
+23	#9d63cb	BL107
+24	#9d63cb	BL107
+25	#9d63cb	BL107
+26	#9d63cb	BL107
+27	#9d63cb	BL107
+28	#9d63cb	BL107
+29	#9d63cb	BL107
+30	#9d63cb	BL107
+31	#9d63cb	BL107
+32	#9d63cb	BL107
+33	#9d63cb	BL107
+34	#9d63cb	BL107
+35	#9d63cb	BL107
+36	#9d63cb	BL107
+37	#5cab47	CC9311
+39	#5cab47	CC9311
+40	#5cab47	CC9311
+41	#5cab47	CC9311
+42	#5cab47	CC9311
+43	#5cab47	CC9311
+44	#5cab47	CC9311
+45	#5cab47	CC9311
+46	#5cab47	CC9311
+47	#5cab47	CC9311
+48	#5cab47	CC9311
+49	#5cab47	CC9311
+50	#5cab47	CC9311
+51	#5cab47	CC9311
+52	#5cab47	CC9311
+53	#5cab47	CC9311
+54	#5cab47	CC9311
+55	#5cab47	CC9311
+56	#5cab47	CC9311
+57	#5cab47	CC9311
+58	#5cab47	CC9311
+60	#c55d93	CC9605
+61	#c55d93	CC9605
+62	#c55d93	CC9605
+63	#c55d93	CC9605
+64	#c55d93	CC9605
+65	#c55d93	CC9605
+66	#c55d93	CC9605
+67	#c55d93	CC9605
+68	#c55d93	CC9605
+69	#c55d93	CC9605
+70	#c55d93	CC9605
+71	#c55d93	CC9605
+72	#c55d93	CC9605
+73	#c55d93	CC9605
+74	#c55d93	CC9605
+76	#c55d93	CC9605
+77	#c55d93	CC9605
+78	#c55d93	CC9605
+80	#11351c	CC9902
+81	#11351c	CC9902
+82	#11351c	CC9902
+83	#11351c	CC9902
+84	#11351c	CC9902
+85	#11351c	CC9902
+86	#11351c	CC9902
+87	#11351c	CC9902
+88	#11351c	CC9902
+89	#11351c	CC9902
+90	#11351c	CC9902
+91	#11351c	CC9902
+92	#11351c	CC9902
+93	#11351c	CC9902
+94	#11351c	CC9902
+95	#ce632f	MITS9220
+97	#ce632f	MITS9220
+98	#ce632f	MITS9220
+99	#ce632f	MITS9220
+100	#ce632f	MITS9220
+101	#ce632f	MITS9220
+102	#ce632f	MITS9220
+103	#ce632f	MITS9220
+104	#ce632f	MITS9220
+105	#ce632f	MITS9220
+106	#ce632f	MITS9220
+107	#ce632f	MITS9220
+108	#ce632f	MITS9220
+109	#ce632f	MITS9220
+110	#ce632f	MITS9220
+111	#ce632f	MITS9220
+112	#ce632f	MITS9220
+113	#008aff	WH8102
+115	#008aff	WH8102
+116	#008aff	WH8102
+117	#008aff	WH8102
+118	#008aff	WH8102
+119	#008aff	WH8102
+120	#008aff	WH8102
+121	#008aff	WH8102
+122	#008aff	WH8102
+123	#008aff	WH8102
+124	#008aff	WH8102
+125	#008aff	WH8102
+126	#008aff	WH8102
+127	#008aff	WH8102
+128	#008aff	WH8102
+129	#008aff	WH8102
+130	#008aff	WH8102
+131	#008aff	WH8102
+132	#008aff	WH8102
+133	#008aff	WH8102
+134	#008aff	WH8102
+135	#008aff	WH8102
+136	#008aff	WH8102
+138	#98894c	WH8109
+139	#98894c	WH8109
+140	#98894c	WH8109
+141	#98894c	WH8109
+142	#98894c	WH8109
+143	#98894c	WH8109
+144	#98894c	WH8109
+145	#98894c	WH8109
+146	#98894c	WH8109
+147	#98894c	WH8109
+148	#98894c	WH8109
+149	#98894c	WH8109
+150	#98894c	WH8109
+151	#98894c	WH8109
+152	#5cab47	CC9311
+153	#11351c	CC9902
+154	#ce632f	MITS9220
+155	#ce632f	MITS9220
+156	#c55d93	CC9605
+157	#5cab47	CC9311
+158	#11351c	CC9902
+159	#ce632f	MITS9220
+160	#008aff	WH8102
+161	#98894c	WH8109
+162	#5cab47	CC9311
+163	#11351c	CC9902
+164	#ce632f	MITS9220
+165	#008aff	WH8102
+166	#98894c	WH8109
+167	#5cab47	CC9311
+168	#11351c	CC9902
+169	#ce632f	MITS9220
+170	#008aff	WH8102
+171	#98894c	WH8109
+172	#008aff	WH8102
+173	#ebd15f	BIOS-U3-1
+174	#fa0045	P-SSM2
