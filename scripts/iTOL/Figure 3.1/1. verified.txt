@@ -1,0 +1,749 @@
+DATASET_COLORSTRIP
+#In colored strip datasets  each ID is associated to a color box/strip and can have an optional label. Color can be specified in hexadecimal  RGB or RGBA notation. When using RGB or RGBA notation  you cannot use COMMA as the dataset separator
+
+#lines starting with a hash are comments and ignored during parsing
+
+#=================================================================#
+#                    MANDATORY SETTINGS                           #
+#=================================================================#
+#select the separator which is used to delimit the data below (TAB SPACE or COMMA).This separator must be used throughout this file (except in the SEPARATOR line  which uses space).
+
+SEPARATOR TAB
+#SEPARATOR COMMA
+#SEPARATOR SPACE
+
+#label is used in the legend table (can be changed later)
+DATASET_LABEL	verified
+
+#dataset color (can be changed later)
+COLOR	#f00001
+
+#=================================================================#
+#                    OPTIONAL SETTINGS                            #
+#=================================================================#
+
+#If COLOR_BRANCHES is set to 1  branches of the tree will be colored according to the colors of the strips above the leaves.
+#When all children of a node have the same color  it will be colored the same  ie. the color will propagate inwards towards the root.
+COLOR_BRANCHES	0
+
+#each dataset can have a legend  which is defined below
+#for each row in the legend  there should be one shape  color and label
+#shape should be a number between 1 and 6:
+#1: square
+#2: circle
+#3: star
+#4: right pointing triangle
+#5: left pointing triangle
+#6: checkmark
+
+LEGEND_TITLE	Verified?
+LEGEND_SHAPES	1	1
+LEGEND_COLORS	#61b650	#de933b
+LEGEND_LABELS	yes	no
+
+#=================================================================#
+#     all other optional settings can be set or changed later     #
+#           in the web interface (under 'Datasets' tab)           #
+#=================================================================#
+
+#width of the colored strip
+#STRIP_WIDTH 25
+
+#left margin  used to increase/decrease the spacing to the next dataset. Can be negative  causing datasets to overlap.
+#MARGIN 0
+
+#border width; if set above 0  a border of specified width (in pixels) will be drawn around the color strip 
+#BORDER_WIDTH 0
+
+#border color; used when BORDER_WIDTH is above 0
+#BORDER_COLOR #0000ff
+
+#always show internal values; if set  values associated to internal nodes will be displayed even if these nodes are not collapsed. It could cause overlapping in the dataset display.
+#SHOW_INTERNAL 0
+
+
+#Internal tree nodes can be specified using IDs directly  or using the 'last common ancestor' method described in iTOL help pages
+
+#=================================================================#
+#       Actual data follows after the "DATA" keyword              #
+#=================================================================#
+DATA
+
+#Examples:
+#assign a red colored strip to leaf 9606  with label 'Human' (label is displayed in the mouseover popups)
+#9606 #ff0000 Human
+
+#assign a green  semi-transparent (alpha 0.5) strip to an internal node  without any label. If 'Show internal values' is set to 'No'  this will only be displayed if the node is collapsed. 
+#9606|5664 rgba(0 255 0 0.5)
+
+SG300122	#de933b	no
+SG300185	#de933b	no
+SG300186	#de933b	no
+SG300188	#de933b	no
+SG300190	#de933b	no
+SG300197	#de933b	no
+SG300270	#de933b	no
+SG300311	#de933b	no
+SG300595	#de933b	no
+SG300662	#de933b	no
+SG300788	#de933b	no
+SG300791	#de933b	no
+SG300792	#de933b	no
+SG300912	#de933b	no
+SG301000	#de933b	no
+SG301030	#de933b	no
+SG301077	#de933b	no
+SH1080	#de933b	no
+SG301318	#de933b	no
+SG301345	#de933b	no
+SG301364	#de933b	no
+SG301368	#de933b	no
+SG301372	#de933b	no
+SG301376	#de933b	no
+SG301406	#de933b	no
+SH0147	#de933b	no
+SH0201	#de933b	no
+SH0267	#de933b	no
+SH0268	#de933b	no
+SH0271	#de933b	no
+SH0371	#de933b	no
+SH0655	#de933b	no
+SH0658	#de933b	no
+SH0659	#de933b	no
+SH0769	#de933b	no
+SH0772	#de933b	no
+SH0797	#de933b	no
+SH0798	#de933b	no
+SH0806	#de933b	no
+SH0807	#de933b	no
+SH0812	#de933b	no
+SH0850	#de933b	no
+SH0905	#de933b	no
+SH0953	#de933b	no
+SH0957	#de933b	no
+SH1176	#de933b	no
+SH1210	#de933b	no
+SH1236	#de933b	no
+SH1238	#de933b	no
+SH1298	#de933b	no
+SH1302	#de933b	no
+SH1336	#de933b	no
+SH1337	#de933b	no
+SH1346	#de933b	no
+SH1351	#de933b	no
+SH1352	#de933b	no
+SH1357	#de933b	no
+SH1358	#de933b	no
+SH1361	#de933b	no
+SH1068	#de933b	no
+1A99	#de933b	no
+1ABF	#de933b	no
+1ATG	#de933b	no
+1B05	#61b650	yes
+1DP4	#61b650	yes
+1DPP	#de933b	no
+1DRJ	#61b650	yes
+1ELJ	#61b650	yes
+1ESZ	#de933b	no
+1EU8	#de933b	no
+1EWK	#de933b	no
+1GCG	#de933b	no
+1GR2	#de933b	no
+1HSL	#61b650	yes
+1II5	#61b650	yes
+1IXH	#de933b	no
+1J1N	#de933b	no
+1JDN	#61b650	yes
+1JX6	#de933b	no
+1LAF	#61b650	yes
+1MRP	#de933b	no
+1N2Z	#de933b	no
+1O7T	#de933b	no
+1P99	#de933b	no
+1PB8	#61b650	yes
+1PC3	#de933b	no
+1POT	#61b650	yes
+1PQ4	#de933b	no
+1PSZ	#de933b	no
+1R9L	#61b650	yes
+1RPJ	#61b650	yes
+1S7Y	#61b650	yes
+1SBP	#de933b	no
+1SI0	#de933b	no
+1SW1	#61b650	yes
+1TJY	#de933b	no
+1TOA	#de933b	no
+1TWY	#de933b	no
+1UIV	#61b650	yes
+1UQW	#de933b	no
+1URG	#de933b	no
+1US4	#de933b	no
+1USK	#61b650	yes
+1VR5	#de933b	no
+1WDN	#61b650	yes
+1WOD	#de933b	no
+1XOC	#61b650	yes
+1XS5	#de933b	no
+1XT8	#61b650	yes
+1XVL	#61b650	yes
+1XVX	#de933b	no
+1XVY	#de933b	no
+1Y3P	#61b650	yes
+1Y4T	#de933b	no
+1Y9U	#de933b	no
+1YK0	#61b650	yes
+1Z16	#de933b	no
+1ZBM	#de933b	no
+1ZHH	#61b650	yes
+1ZTY	#de933b	no
+2A5T	#de933b	no
+2B3B	#61b650	yes
+2B4L	#61b650	yes
+2CEX	#61b650	yes
+2CHU	#de933b	no
+2CZL	#de933b	no
+2D5W	#de933b	no
+2DVZ	#de933b	no
+2E4U	#de933b	no
+2E4Z	#de933b	no
+2ETV	#de933b	no
+2F34	#61b650	yes
+2F5X	#de933b	no
+2FN9	#61b650	yes
+2FNC	#de933b	no
+2FQX	#de933b	no
+2FVY	#de933b	no
+2FYI	#de933b	no
+2G29	#de933b	no
+2GH9	#61b650	yes
+2GHA	#de933b	no
+2H0A	#de933b	no
+2H5Y	#de933b	no
+2HEU	#de933b	no
+2HPG	#de933b	no
+2HQB	#de933b	no
+2HXR	#de933b	no
+2HXW	#de933b	no
+2HZL	#de933b	no
+2I48	#de933b	no
+2IA4	#de933b	no
+2IEE	#de933b	no
+2IOY	#de933b	no
+2O1M	#de933b	no
+2O7I	#61b650	yes
+2ONR	#de933b	no
+2OZZ	#de933b	no
+2PFY	#61b650	yes
+2PFZ	#61b650	yes
+2PRS	#61b650	yes
+2PT2	#de933b	no
+2PVU	#61b650	yes
+2PYY	#61b650	yes
+2Q88	#61b650	yes
+2Q8P	#de933b	no
+2QL3	#de933b	no
+2QPQ	#de933b	no
+2QRY	#61b650	yes
+2QU7	#de933b	no
+2QVC	#de933b	no
+2R79	#de933b	no
+2RC7	#61b650	yes
+2RCA	#61b650	yes
+2REG	#61b650	yes
+2RG7	#de933b	no
+2RJO	#de933b	no
+2UVG	#61b650	yes
+2UVI	#61b650	yes
+2V25	#61b650	yes
+2V3Q	#de933b	no
+2V3T	#61b650	yes
+2V84	#61b650	yes
+2VK2	#61b650	yes
+2VP1	#de933b	no
+2VPO	#61b650	yes
+2W7Y	#61b650	yes
+2WHY	#61b650	yes
+2WJW	#de933b	no
+2WOK	#de933b	no
+2X26	#de933b	no
+2X4L	#de933b	no
+2X7P	#de933b	no
+2X7X	#61b650	yes
+2XD2	#61b650	yes
+2XH8	#de933b	no
+2XHD	#de933b	no
+2Y7I	#61b650	yes
+2YJP	#61b650	yes
+2YLN	#61b650	yes
+2Z22	#de933b	no
+2Z23	#de933b	no
+2Z8D	#61b650	yes
+2ZYK	#61b650	yes
+2ZZV	#61b650	yes
+3B50	#61b650	yes
+3BE6	#de933b	no
+3BRS	#de933b	no
+3C9H	#de933b	no
+3CFX	#de933b	no
+3CFZ	#de933b	no
+3CG1	#de933b	no
+3CG3	#de933b	no
+3CLK	#de933b	no
+3CVG	#de933b	no
+3CX3	#de933b	no
+3D02	#de933b	no
+3DEL	#de933b	no
+3DLN	#61b650	yes
+3DRF	#de933b	no
+3E4R	#de933b	no
+3EAF	#de933b	no
+3EIW	#de933b	no
+3EJW	#de933b	no
+3FAT	#61b650	yes
+3FXB	#61b650	yes
+3G1W	#de933b	no
+3G85	#de933b	no
+3GBV	#de933b	no
+3GFV	#61b650	yes
+3GI1	#61b650	yes
+3GXA	#de933b	no
+3GYB	#de933b	no
+3H5L	#de933b	no
+3H75	#de933b	no
+3H7M	#de933b	no
+3HH8	#61b650	yes
+3HJT	#de933b	no
+3HN0	#de933b	no
+3HUT	#de933b	no
+3HV1	#de933b	no
+3HXP	#de933b	no
+3I09	#de933b	no
+3I3V	#de933b	no
+3I45	#de933b	no
+3I6V	#de933b	no
+3IP5	#61b650	yes
+3IX1	#de933b	no
+3JYR	#61b650	yes
+3K01	#61b650	yes
+3K2D	#de933b	no
+3K4U	#de933b	no
+3K6U	#61b650	yes
+3K9C	#de933b	no
+3KKE	#de933b	no
+3KS9	#de933b	no
+3KSM	#de933b	no
+3KZG	#de933b	no
+3L49	#de933b	no
+3L6H	#61b650	yes
+3L6U	#de933b	no
+3LKB	#de933b	no
+3LMK	#de933b	no
+3LOP	#de933b	no
+3LR1	#de933b	no
+3M8U	#61b650	yes
+3M9W	#61b650	yes
+3MD9	#61b650	yes
+3MFQ	#61b650	yes
+3MIZ	#de933b	no
+3MPK	#de933b	no
+3MQ4	#de933b	no
+3MST	#de933b	no
+3MWF	#de933b	no
+3N5L	#de933b	no
+3O66	#de933b	no
+3O9P	#61b650	yes
+3OEK	#de933b	no
+3OLZ	#de933b	no
+3OM0	#de933b	no
+3OMB	#de933b	no
+3OO6	#61b650	yes
+3P7I	#61b650	yes
+3PPN	#61b650	yes
+3PSA	#61b650	yes
+3PU5	#de933b	no
+3QAX	#de933b	no
+3QEK	#61b650	yes
+3QUF	#de933b	no
+3R5S	#de933b	no
+3R6U	#61b650	yes
+3ROT	#de933b	no
+3RPW	#de933b	no
+3RQT	#de933b	no
+3RY3	#de933b	no
+3S99	#de933b	no
+3S9E	#61b650	yes
+3SAJ	#de933b	no
+3SG0	#61b650	yes
+3T66	#de933b	no
+3T95	#de933b	no
+3TCF	#61b650	yes
+3TD9	#de933b	no
+3TEF	#de933b	no
+3TLK	#de933b	no
+3TMG	#de933b	no
+3TNY	#de933b	no
+3TPA	#61b650	yes
+3TQL	#de933b	no
+3TQW	#de933b	no
+3TTL	#61b650	yes
+3TTM	#61b650	yes
+3U65	#de933b	no
+3UIF	#de933b	no
+3UK0	#61b650	yes
+3UKJ	#61b650	yes
+3UN6	#de933b	no
+3UOR	#de933b	no
+3UP9	#de933b	no
+3URM	#61b650	yes
+3VV5	#de933b	no
+3VXB	#de933b	no
+3ZKK	#61b650	yes
+3ZS6	#de933b	no
+4AB5	#de933b	no
+4AQ4	#61b650	yes
+4BBP	#61b650	yes
+4C0R	#61b650	yes
+4CL2	#de933b	no
+4ECF	#de933b	no
+4EDP	#de933b	no
+4EF1	#de933b	no
+4ELO	#de933b	no
+4EQ7	#61b650	yes
+4EQ9	#de933b	no
+4EQB	#de933b	no
+4EVQ	#de933b	no
+4EVS	#61b650	yes
+4EXL	#de933b	no
+4EY3	#de933b	no
+4F06	#de933b	no
+4F11	#61b650	yes
+4F18	#de933b	no
+4F3P	#de933b	no
+4F3S	#de933b	no
+4FAJ	#61b650	yes
+4FNA	#61b650	yes
+4G68	#de933b	no
+4GD5	#de933b	no
+4GL0	#de933b	no
+4GL8	#de933b	no
+4GNR	#de933b	no
+4GOT	#de933b	no
+4GVO	#de933b	no
+4H1X	#de933b	no
+4H5F	#de933b	no
+4HMO	#61b650	yes
+4HN9	#de933b	no
+4HS7	#de933b	no
+4I1D	#de933b	no
+4I62	#de933b	no
+4IIL	#de933b	no
+4INO	#61b650	yes
+4IO2	#de933b	no
+4IRX	#61b650	yes
+4JB0	#61b650	yes
+4JCC	#de933b	no
+4JOQ	#de933b	no
+4JWO	#de933b	no
+4K3F	#de933b	no
+4K3V	#61b650	yes
+4KD5	#de933b	no
+4KQ9	#de933b	no
+4KQC	#de933b	no
+4KV7	#de933b	no
+4KVF	#de933b	no
+4KZK	#de933b	no
+4LA9	#61b650	yes
+4LJS	#de933b	no
+4LN5	#de933b	no
+4LQ2	#de933b	no
+4LVQ	#61b650	yes
+4M7O	#de933b	no
+4M88	#de933b	no
+4MAG	#61b650	yes
+4MBP	#de933b	no
+4MCO	#de933b	no
+4MDY	#de933b	no
+4MF3	#de933b	no
+4MFI	#de933b	no
+4MIJ	#61b650	yes
+4MLC	#de933b	no
+4MLZ	#de933b	no
+4MMP	#61b650	yes
+4MNC	#61b650	yes
+4MNP	#61b650	yes
+4MO9	#de933b	no
+4MQE	#de933b	no
+4MX6	#61b650	yes
+4MX8	#de933b	no
+4N01	#de933b	no
+4N03	#de933b	no
+4N0Q	#de933b	no
+4N13	#61b650	yes
+4N15	#61b650	yes
+4N4U	#de933b	no
+4N6D	#de933b	no
+4N6K	#61b650	yes
+4N8G	#61b650	yes
+4N8Y	#61b650	yes
+4N91	#61b650	yes
+4ND9	#de933b	no
+4NF0	#61b650	yes
+4NG7	#de933b	no
+4NGU	#61b650	yes
+4NHB	#61b650	yes
+4NMY	#de933b	no
+4NN3	#61b650	yes
+4NQ8	#61b650	yes
+4NQR	#de933b	no
+4NTL	#de933b	no
+4NX1	#61b650	yes
+4O7M	#61b650	yes
+4O8M	#61b650	yes
+4O94	#61b650	yes
+4OAN	#61b650	yes
+4OEN	#de933b	no
+4OER	#61b650	yes
+4OET	#61b650	yes
+4OHN	#de933b	no
+4OMB	#61b650	yes
+4ONY	#de933b	no
+4OVJ	#de933b	no
+4OVK	#de933b	no
+4OVQ	#61b650	yes
+4OVR	#61b650	yes
+4OVS	#61b650	yes
+4OVT	#61b650	yes
+4OXQ	#61b650	yes
+4P0I	#61b650	yes
+4P1E	#de933b	no
+4P3L	#61b650	yes
+4P47	#de933b	no
+4P56	#61b650	yes
+4P8B	#61b650	yes
+4P98	#de933b	no
+4P9K	#61b650	yes
+4PAF	#61b650	yes
+4PAG	#de933b	no
+4PAK	#61b650	yes
+4PBQ	#61b650	yes
+4PC9	#61b650	yes
+4PDD	#61b650	yes
+4PDH	#61b650	yes
+4PE3	#de933b	no
+4PE6	#de933b	no
+4PET	#61b650	yes
+4PEV	#de933b	no
+4PF6	#61b650	yes
+4PF8	#61b650	yes
+4PFB	#61b650	yes
+4PFI	#de933b	no
+4PFR	#de933b	no
+4PGN	#61b650	yes
+4PM4	#de933b	no
+4PRS	#61b650	yes
+4PZ0	#de933b	no
+4Q5T	#de933b	no
+4Q6W	#de933b	no
+4QBA	#de933b	no
+4QFK	#61b650	yes
+4QHQ	#de933b	no
+4QRZ	#de933b	no
+4R2B	#de933b	no
+4R2F	#de933b	no
+4R6H	#de933b	no
+4R6K	#de933b	no
+4R6Y	#de933b	no
+4R72	#de933b	no
+4R9F	#61b650	yes
+4RA1	#61b650	yes
+4RK0	#de933b	no
+4RK1	#de933b	no
+4RK2	#de933b	no
+4RK9	#de933b	no
+4RSM	#61b650	yes
+4RU0	#de933b	no
+4RU1	#de933b	no
+4RXL	#de933b	no
+4RXM	#de933b	no
+4RXT	#de933b	no
+4RXU	#de933b	no
+4RY1	#de933b	no
+4RY8	#de933b	no
+4RY9	#de933b	no
+4RYA	#de933b	no
+4UA8	#61b650	yes
+4UAB	#61b650	yes
+4WED	#de933b	no
+4WEP	#61b650	yes
+4WT7	#de933b	no
+4WUT	#de933b	no
+4WWH	#de933b	no
+4WXJ	#de933b	no
+4WZZ	#de933b	no
+4X8R	#de933b	no
+4X9T	#de933b	no
+4XAQ	#61b650	yes
+4XAR	#61b650	yes
+4XEQ	#de933b	no
+4XFE	#de933b	no
+4XFK	#de933b	no
+4XRV	#61b650	yes
+4XZ6	#61b650	yes
+4Y9T	#61b650	yes
+4YAH	#61b650	yes
+4YHS	#de933b	no
+4YIC	#de933b	no
+4YKI	#61b650	yes
+4YLE	#de933b	no
+4YMX	#61b650	yes
+4YO7	#de933b	no
+4YS6	#de933b	no
+4YV7	#de933b	no
+4YWH	#de933b	no
+4Z0N	#de933b	no
+4Z7E	#de933b	no
+4Z9N	#de933b	no
+4ZDM	#61b650	yes
+4ZEF	#de933b	no
+4ZJP	#de933b	no
+4ZPJ	#de933b	no
+4ZS9	#61b650	yes
+5BQ3	#de933b	no
+5BRA	#de933b	no
+5BWJ	#de933b	no
+5CI5	#de933b	no
+5CM6	#de933b	no
+5CR9	#de933b	no
+5DH0	#61b650	yes
+5DKV	#de933b	no
+5DTE	#de933b	no
+5DVF	#61b650	yes
+5E7U	#de933b	no
+5EWJ	#de933b	no
+5EYF	#de933b	no
+5F1Q	#de933b	no
+5FLY	#61b650	yes
+5FTH	#de933b	no
+5H8F	#de933b	no
+5HKO	#de933b	no
+5HQJ	#de933b	no
+5HSG	#de933b	no
+5HX7	#de933b	no
+5I84	#de933b	no
+5IAI	#de933b	no
+5IBQ	#de933b	no
+5IM2	#de933b	no
+5ISU	#de933b	no
+5IX8	#de933b	no
+5IXP	#de933b	no
+5JK4	#de933b	no
+93111545	#de933b	no
+99022002	#de933b	no
+92201719	#de933b	no
+81091056	#de933b	no
+81021797	#de933b	no
+BU310722	#de933b	no
+93112872	#de933b	no
+99022250	#de933b	no
+81022442	#de933b	no
+81020374	#de933b	no
+81092679	#de933b	no
+93110247	#de933b	no
+99020235	#de933b	no
+92200259	#de933b	no
+81020212	#de933b	no
+81090201	#de933b	no
+93111670	#de933b	no
+96051294	#de933b	no
+99021183	#de933b	no
+92201198	#de933b	no
+81021170	#de933b	no
+81091394	#de933b	no
+96051096	#de933b	no
+93111758	#de933b	no
+99021010	#de933b	no
+92201815	#de933b	no
+81021341	#de933b	no
+81091173	#de933b	no
+93110939	#de933b	no
+99020702	#de933b	no
+92200996	#de933b	no
+81020709	#de933b	no
+81092054	#de933b	no
+93112366	#de933b	no
+99020599	#de933b	no
+92202624	#de933b	no
+81020606	#de933b	no
+81020607	#de933b	no
+93110114	#de933b	no
+99020152	#de933b	no
+92200121	#de933b	no
+81020125	#de933b	no
+81090131	#de933b	no
+93111402	#de933b	no
+99021078	#de933b	no
+92201409	#de933b	no
+81021282	#de933b	no
+81091255	#de933b	no
+93111287	#de933b	no
+99021234	#de933b	no
+92201579	#de933b	no
+81021111	#de933b	no
+81091445	#de933b	no
+93111190	#de933b	no
+99020847	#de933b	no
+92201218	#de933b	no
+81020840	#61b650	yes
+81090877	#de933b	no
+93111747	#de933b	no
+99021364	#de933b	no
+92201803	#de933b	no
+81020971	#de933b	no
+C0926319	#de933b	no
+92200388	#de933b	no
+81021917	#de933b	no
+93112776	#de933b	no
+92203010	#de933b	no
+93111499	#de933b	no
+92201974	#de933b	no
+81022481	#de933b	no
+93112920	#de933b	no
+92203122	#de933b	no
+81022507	#de933b	no
+99021313	#de933b	no
+92201702	#de933b	no
+81021815	#de933b	no
+81021018	#de933b	no
+81091378	#de933b	no
+81091542	#de933b	no
+PSSM2248	#de933b	no
+93111513	#de933b	no
+81021415	#de933b	no
+93110634	#de933b	no
+93112631	#de933b	no
+93112819	#de933b	no
+96051171	#de933b	no
+81021286	#de933b	no
+81022487	#de933b	no
+BU313432	#de933b	no
+93112811	#de933b	no
+99022214	#de933b	no
+92203043	#de933b	no
+92203051	#de933b	no
+96052559	#de933b	no
+93112119	#de933b	no
+99021761	#de933b	no
+92202374	#de933b	no
+81021868	#de933b	no
+81090659	#de933b	no
+93110386	#de933b	no
+99022017	#de933b	no
+92200407	#de933b	no
+81022133	#de933b	no
+81090330	#de933b	no
+93112386	#de933b	no
+99021818	#de933b	no
+92202646	#de933b	no
+81021920	#de933b	no
+81090570	#de933b	no
+81026481	#de933b	no

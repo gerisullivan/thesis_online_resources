@@ -1,0 +1,743 @@
+DATASET_TEXT
+#31408ft datasets, each ID is associated to text label, which can be displayed directly on the node branch, or outside the tree
+#31408fstarting with a hash are comments and ignored during parsing
+#31408f===========================================================#
+#31408f              MANDATORY SETTINGS                           #
+#31408f===========================================================#
+#31408f the separator which is used to delimit the data below (TAB,SPACE or COMMA).This separator must be used throughout this file (except in the SEPARATOR line, which uses space).
+
+SEPARATOR TAB
+#31408fTOR SPACE
+#31408fTOR COMMA
+
+#31408fis used in the legend table (can be changed later)
+DATASET_LABEL	outside labels
+
+#31408ft color (can be changed later)
+COLOR	#31408f
+
+#31408f===========================================================#
+#31408f              OPTIONAL SETTINGS                            #
+#31408f===========================================================#
+
+#31408f===========================================================#
+#31408fll other optional settings can be set or changed later     #
+#31408f     in the web interface (under 'Datasets' tab)           #
+#31408f===========================================================#
+
+#31408fargin, used to increase/decrease the spacing to the next dataset. Can be negative, causing datasets to overlap. Used only for text labels which are displayed on the outside
+MARGIN	0
+
+#31408fs to external text labels only; if set, text labels associated to internal nodes will be displayed even if these nodes are not collapsed. It could cause overlapping in the dataset display.
+SHOW_INTERNAL	0
+
+#31408f all labels by the specified angle
+LABEL_ROTATION	0
+
+#31408f to 1, tree rotation will not influence the individual label rotation
+STRAIGHT_LABELS	0
+
+#31408fs to external text labels only; If set to 1, labels will be displayed in arcs aligned to the tree (in circular mode) or vertically (in normal mode). All rotation parameters (global or individual) will be ignored.
+ALIGN_TO_TREE	0
+
+#31408fize factor; For external text labels, default font size will be slightly less than the available space between leaves, but you can set a multiplication factor here to increase/decrease it (values from 0 to 1 will decrease it, values above 1 will increase it)
+SIZE_FACTOR	1
+
+#LEGEND_TITLE	Substrate group
+#LEGEND_SHAPES	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1
+#LEGEND_COLORS	#31408f	#31408f	#31408f	#31408f	#31408f	#31408f	#31408f	#31408f	#31408f	#31408f	#31408f	#31408f	#31408f	#31408f	#31408f	#31408f	#31408f	#31408f	#31408f
+#LEGEND_LABELS	ATP	branched aa	metal	N	n.d.	neg charged aa	non-polar aa	osmolyte	P	peptide	polar aa	pos charged aa	purine	pyrimidine	S	special aa	sugar	unclassified aa	vitamin
+
+#31408fal tree nodes can be specified using IDs directly, or using the 'last common ancestor' method described in iTOL help pages
+#31408f===========================================================#
+#31408f Actual data follows after the "DATA" keyword              #
+#31408f===========================================================#
+#31408fllowing fields are possible for each node:
+#31408fel,position,color,style,size_factor,rotation
+
+#31408fon defines the position of the text label on the tree:
+#31408f external label
+#31408fmber between 0 and 1 = internal label positioned at the specified value along the node branch (for example, position 0 is exactly at the start of node branch, position 0.5 is in the middle, and position 1 is at the end)
+#31408fcan be 'normal',''bold','italic' or 'bold-italic'
+#31408factor will be multiplied with the standard font size
+
+DATA
+#31408fes
+
+#31408f606 will have an external label 'Homo sapiens' in bold red and twice the size of standard labels
+#31408f606,Homo sapiens,-1,#31408f,bold,2,0
+
+#31408f530 will have an internal label 'Oryza sativa' in bold italic blue, starting directly over the node
+#31408fryza sativa,0,#31408f,bold-italic,1
+
+81020125	sugar	-1	#31408f	normal	2	0
+81020212	toluene	-1	#31408f	normal	2	0
+81020374	urea	-1	#31408f	normal	2	0
+81020606	amino acid	-1	#31408f	normal	2	0
+81020607	amino acid	-1	#31408f	normal	2	0
+81020709	oligopeptides	-1	#31408f	normal	2	0
+81020840	acidic and neutral aa	-1	#31408f	normal	2	0
+81020971	Mn2+/Zn2+	-1	#31408f	normal	2	0
+81021018	n.d.	-1	#31408f	normal	2	0
+81021111	n.d.	-1	#31408f	normal	2	0
+81021170	phosphate/phosphonate	-1	#31408f	normal	2	0
+81021282	sugar	-1	#31408f	normal	2	0
+81021286	phosphate	-1	#31408f	normal	2	0
+81021341	Mn2+/Zn2+	-1	#31408f	normal	2	0
+81021415	nitrate/sulfonate/bicarbonate	-1	#31408f	normal	2	0
+81021797	Fe3+	-1	#31408f	normal	2	0
+81021815	n.d.	-1	#31408f	normal	2	0
+81021868	n.d.	-1	#31408f	normal	2	0
+81021917	glycine betaine	-1	#31408f	normal	2	0
+81021920	n.d.	-1	#31408f	normal	2	0
+81022133	n.d.	-1	#31408f	normal	2	0
+81022442	urea	-1	#31408f	normal	2	0
+81022481	zinc	-1	#31408f	normal	2	0
+81022487	cyanate	-1	#31408f	normal	2	0
+81022507	phosphate	-1	#31408f	normal	2	0
+81026481	n.d.	-1	#31408f	normal	2	0
+81090131	sugar	-1	#31408f	normal	2	0
+81090201	toluene	-1	#31408f	normal	2	0
+81090330	n.d.	-1	#31408f	normal	2	0
+81090570	n.d.	-1	#31408f	normal	2	0
+81090659	n.d.	-1	#31408f	normal	2	0
+81090877	acidic and neutral aa	-1	#31408f	normal	2	0
+81091056	Fe3+	-1	#31408f	normal	2	0
+81091173	Mn2+/Zn2+	-1	#31408f	normal	2	0
+81091255	sugar	-1	#31408f	normal	2	0
+81091378	n.d.	-1	#31408f	normal	2	0
+81091394	phosphate/phosphonate	-1	#31408f	normal	2	0
+81091445	n.d.	-1	#31408f	normal	2	0
+81091542	n.d.	-1	#31408f	normal	2	0
+81092054	oligopeptides	-1	#31408f	normal	2	0
+81092679	urea	-1	#31408f	normal	2	0
+92200121	sugar	-1	#31408f	normal	2	0
+92200259	toluene	-1	#31408f	normal	2	0
+92200388	glycine betaine	-1	#31408f	normal	2	0
+92200407	n.d.	-1	#31408f	normal	2	0
+92200996	oligopeptides	-1	#31408f	normal	2	0
+92201198	phosphate/phosphonate	-1	#31408f	normal	2	0
+92201218	acidic and neutral aa	-1	#31408f	normal	2	0
+92201409	sugar	-1	#31408f	normal	2	0
+92201579	n.d.	-1	#31408f	normal	2	0
+92201702	n.d.	-1	#31408f	normal	2	0
+92201719	Fe3+	-1	#31408f	normal	2	0
+92201803	Mn2+/Zn2+	-1	#31408f	normal	2	0
+92201815	Mn2+/Zn2+	-1	#31408f	normal	2	0
+92201974	zinc	-1	#31408f	normal	2	0
+92202374	n.d.	-1	#31408f	normal	2	0
+92202624	amino acid	-1	#31408f	normal	2	0
+92202646	n.d.	-1	#31408f	normal	2	0
+92203010	mannitol/chloroaromatic	-1	#31408f	normal	2	0
+92203043	n.d.	-1	#31408f	normal	2	0
+92203051	n.d.	-1	#31408f	normal	2	0
+92203122	phosphate	-1	#31408f	normal	2	0
+93110114	sugar	-1	#31408f	normal	2	0
+93110247	toluene	-1	#31408f	normal	2	0
+93110386	n.d.	-1	#31408f	normal	2	0
+93110634	branched chain amino acids	-1	#31408f	normal	2	0
+93110939	oligopeptides	-1	#31408f	normal	2	0
+93111190	acidic and neutral aa	-1	#31408f	normal	2	0
+93111287	n.d.	-1	#31408f	normal	2	0
+93111402	sugar	-1	#31408f	normal	2	0
+93111499	zinc	-1	#31408f	normal	2	0
+93111513	nitrate/sulfonate/bicarbonate	-1	#31408f	normal	2	0
+93111545	Fe3+	-1	#31408f	normal	2	0
+93111670	phosphate/phosphonate	-1	#31408f	normal	2	0
+93111747	Mn2+/Zn2+	-1	#31408f	normal	2	0
+93111758	Mn2+/Zn2+	-1	#31408f	normal	2	0
+93112119	n.d.	-1	#31408f	normal	2	0
+93112366	amino acid	-1	#31408f	normal	2	0
+93112386	n.d.	-1	#31408f	normal	2	0
+93112631	branched chain amino acids	-1	#31408f	normal	2	0
+93112776	mannitol/chloroaromatic	-1	#31408f	normal	2	0
+93112811	n.d.	-1	#31408f	normal	2	0
+93112819	phosphate/phosphonate	-1	#31408f	normal	2	0
+93112872	urea	-1	#31408f	normal	2	0
+93112920	phosphate	-1	#31408f	normal	2	0
+96051096	phosphate/phosphonate	-1	#31408f	normal	2	0
+96051171	n.d.	-1	#31408f	normal	2	0
+96051294	phosphate/phosphonate	-1	#31408f	normal	2	0
+96052559	n.d.	-1	#31408f	normal	2	0
+99020152	sugar	-1	#31408f	normal	2	0
+99020235	toluene	-1	#31408f	normal	2	0
+99020599	amino acid	-1	#31408f	normal	2	0
+99020702	oligopeptides	-1	#31408f	normal	2	0
+99020847	acidic and neutral aa	-1	#31408f	normal	2	0
+99021010	Mn2+/Zn2+	-1	#31408f	normal	2	0
+99021078	sugar	-1	#31408f	normal	2	0
+99021183	phosphate/phosphonate	-1	#31408f	normal	2	0
+99021234	n.d.	-1	#31408f	normal	2	0
+99021313	n.d.	-1	#31408f	normal	2	0
+99021364	Mn2+/Zn2+	-1	#31408f	normal	2	0
+99021761	n.d.	-1	#31408f	normal	2	0
+99021818	n.d.	-1	#31408f	normal	2	0
+99022002	Fe3+	-1	#31408f	normal	2	0
+99022017	n.d.	-1	#31408f	normal	2	0
+99022214	n.d.	-1	#31408f	normal	2	0
+99022250	urea	-1	#31408f	normal	2	0
+1A99	Putrescine	-1	#31408f	normal	2	0
+1ABF	Arabinose	-1	#31408f	normal	2	0
+1ATG	Molybdate	-1	#31408f	normal	2	0
+1B05	Oligopeptide	-1	#31408f	normal	2	0
+1DP4	Natiuretic Peptides	-1	#31408f	normal	2	0
+1DPP	Dipeptide	-1	#31408f	normal	2	0
+1DRJ	Ribose	-1	#31408f	normal	2	0
+1ELJ	Maltotriose	-1	#31408f	normal	2	0
+1ESZ	Siderophore 	-1	#31408f	normal	2	0
+1EU8	Maltose, Trehalose	-1	#31408f	normal	2	0
+1EWK	Glutamate	-1	#31408f	normal	2	0
+1GCG	Galactose	-1	#31408f	normal	2	0
+1GR2	Glutamate	-1	#31408f	normal	2	0
+1HSL	Histidine	-1	#31408f	normal	2	0
+1II5	Glutamate	-1	#31408f	normal	2	0
+1IXH	Phosphate	-1	#31408f	normal	2	0
+1J1N	Alginate	-1	#31408f	normal	2	0
+1JDN	Natiuretic Peptides	-1	#31408f	normal	2	0
+1JX6	Autoinducer 2	-1	#31408f	normal	2	0
+1LAF	Lysine/Arginine/Ornithine	-1	#31408f	normal	2	0
+1MRP	Iron	-1	#31408f	normal	2	0
+1N2Z	Vitamine B12	-1	#31408f	normal	2	0
+1O7T	Iron	-1	#31408f	normal	2	0
+1P99	Glycylmethionine	-1	#31408f	normal	2	0
+1PB8	Glutamate	-1	#31408f	normal	2	0
+1PC3	Phosphate	-1	#31408f	normal	2	0
+1POT	Spermidine, Putrescine	-1	#31408f	normal	2	0
+1PQ4	Zinc	-1	#31408f	normal	2	0
+1PSZ	Manganese	-1	#31408f	normal	2	0
+1R9L	Glycine Betaine/Proline	-1	#31408f	normal	2	0
+1RPJ	Allose	-1	#31408f	normal	2	0
+1S7Y	Glutamate	-1	#31408f	normal	2	0
+1SBP	Sulfate	-1	#31408f	normal	2	0
+1SI0	Iron	-1	#31408f	normal	2	0
+1SW1	Proline Betaine	-1	#31408f	normal	2	0
+1TJY	Autoinducer 2	-1	#31408f	normal	2	0
+1TOA	Zinc	-1	#31408f	normal	2	0
+1TWY	Phosphate	-1	#31408f	normal	2	0
+1UIV	Nickel	-1	#31408f	normal	2	0
+1UQW	Glutathione	-1	#31408f	normal	2	0
+1URG	Maltose	-1	#31408f	normal	2	0
+1US4	Glutamate	-1	#31408f	normal	2	0
+1USK	Leucine	-1	#31408f	normal	2	0
+1VR5	Oligopeptide	-1	#31408f	normal	2	0
+1WDN	Glutamine	-1	#31408f	normal	2	0
+1WOD	Molybdate	-1	#31408f	normal	2	0
+1XOC	Oligopeptide	-1	#31408f	normal	2	0
+1XS5	L-Methionine	-1	#31408f	normal	2	0
+1XT8	Cysteine	-1	#31408f	normal	2	0
+1XVL	Manganese	-1	#31408f	normal	2	0
+1XVX	Iron	-1	#31408f	normal	2	0
+1XVY	Iron	-1	#31408f	normal	2	0
+1Y3P	Alginate	-1	#31408f	normal	2	0
+1Y4T	Iron	-1	#31408f	normal	2	0
+1Y9U	Iron	-1	#31408f	normal	2	0
+1YK0	Natiuretic Peptides	-1	#31408f	normal	2	0
+1Z16	Leu, Ile, Val	-1	#31408f	normal	2	0
+1ZBM	n.d.	-1	#31408f	normal	2	0
+1ZHH	Autoinducer 2	-1	#31408f	normal	2	0
+1ZTY	Peptide	-1	#31408f	normal	2	0
+2A5T	Glutamate	-1	#31408f	normal	2	0
+2B3B	Glucose	-1	#31408f	normal	2	0
+2B4L	Glycine Betaine	-1	#31408f	normal	2	0
+2CEX	Sialic Acid	-1	#31408f	normal	2	0
+2CHU	n.d.	-1	#31408f	normal	2	0
+2CZL	n.d.	-1	#31408f	normal	2	0
+2D5W	Peptide	-1	#31408f	normal	2	0
+2DVZ	Glutamate	-1	#31408f	normal	2	0
+2E4U	Glutamate	-1	#31408f	normal	2	0
+2E4Z	Glutamate	-1	#31408f	normal	2	0
+2ETV	Iron	-1	#31408f	normal	2	0
+2F34	Glutamate	-1	#31408f	normal	2	0
+2F5X	Aspartate	-1	#31408f	normal	2	0
+2FN9	Ribose	-1	#31408f	normal	2	0
+2FNC	Maltose	-1	#31408f	normal	2	0
+2FQX	n.d.	-1	#31408f	normal	2	0
+2FVY	Galactose	-1	#31408f	normal	2	0
+2FYI	n.d.	-1	#31408f	normal	2	0
+2G29	Nitrate	-1	#31408f	normal	2	0
+2GH9	Maltose	-1	#31408f	normal	2	0
+2GHA	Maltose	-1	#31408f	normal	2	0
+2H0A	n.d.	-1	#31408f	normal	2	0
+2H5Y	Molybdate	-1	#31408f	normal	2	0
+2HEU	Sugar	-1	#31408f	normal	2	0
+2HPG	n.d.	-1	#31408f	normal	2	0
+2HQB	n.d.	-1	#31408f	normal	2	0
+2HXR	Sodium Azide	-1	#31408f	normal	2	0
+2HXW	Citrate	-1	#31408f	normal	2	0
+2HZL	n.d.	-1	#31408f	normal	2	0
+2I48	Bicarbonate	-1	#31408f	normal	2	0
+2IA4	Amino Acid	-1	#31408f	normal	2	0
+2IEE	n.d.	-1	#31408f	normal	2	0
+2IOY	Sugar	-1	#31408f	normal	2	0
+2O1M	Cystine	-1	#31408f	normal	2	0
+2O7I	Oligopeptide	-1	#31408f	normal	2	0
+2ONR	Molybdate, Tungstate	-1	#31408f	normal	2	0
+2OZZ	n.d.	-1	#31408f	normal	2	0
+2PFY	Pyroglutamic Acid	-1	#31408f	normal	2	0
+2PFZ	Pyroglutamic Acid	-1	#31408f	normal	2	0
+2PRS	Zinc	-1	#31408f	normal	2	0
+2PT2	Iron	-1	#31408f	normal	2	0
+2PVU	Arg/Lys/His	-1	#31408f	normal	2	0
+2PYY	Glutamate	-1	#31408f	normal	2	0
+2Q88	Cystine	-1	#31408f	normal	2	0
+2Q8P	Heme	-1	#31408f	normal	2	0
+2QL3	n.d.	-1	#31408f	normal	2	0
+2QPQ	n.d.	-1	#31408f	normal	2	0
+2QRY	Thiamine	-1	#31408f	normal	2	0
+2QU7	n.d.	-1	#31408f	normal	2	0
+2QVC	Sugar	-1	#31408f	normal	2	0
+2R79	Heme	-1	#31408f	normal	2	0
+2RC7	Glutamate	-1	#31408f	normal	2	0
+2RCA	Glutamate	-1	#31408f	normal	2	0
+2REG	Choline 	-1	#31408f	normal	2	0
+2RG7	Heme	-1	#31408f	normal	2	0
+2RJO	n.d.	-1	#31408f	normal	2	0
+2UVG	Sugar	-1	#31408f	normal	2	0
+2UVI	Sugar	-1	#31408f	normal	2	0
+2V25	Aspartate / Glutamate	-1	#31408f	normal	2	0
+2V3Q	Phosphate	-1	#31408f	normal	2	0
+2V3T	Glutamate	-1	#31408f	normal	2	0
+2V84	Spermidine, Putrescine	-1	#31408f	normal	2	0
+2VK2	Galactofuranose	-1	#31408f	normal	2	0
+2VP1	Iron	-1	#31408f	normal	2	0
+2VPO	Ectoine	-1	#31408f	normal	2	0
+2W7Y	Sugar	-1	#31408f	normal	2	0
+2WHY	Siderophore 	-1	#31408f	normal	2	0
+2WJW	Glutamate	-1	#31408f	normal	2	0
+2WOK	Oligopeptide	-1	#31408f	normal	2	0
+2X26	Aliphatic Sulfonate	-1	#31408f	normal	2	0
+2X4L	Siderophore	-1	#31408f	normal	2	0
+2X7P	n.d.	-1	#31408f	normal	2	0
+2X7X	Fructose	-1	#31408f	normal	2	0
+2XD2	Maltose	-1	#31408f	normal	2	0
+2XH8	Zinc	-1	#31408f	normal	2	0
+2XHD	Glutamate	-1	#31408f	normal	2	0
+2Y7I	Arginine	-1	#31408f	normal	2	0
+2YJP	Cysteine	-1	#31408f	normal	2	0
+2YLN	Cystine	-1	#31408f	normal	2	0
+2Z22	Phosphate	-1	#31408f	normal	2	0
+2Z23	Oligopeptide	-1	#31408f	normal	2	0
+2Z8D	Sugar	-1	#31408f	normal	2	0
+2ZYK	Sugar	-1	#31408f	normal	2	0
+2ZZV	Lactate	-1	#31408f	normal	2	0
+3B50	Sialic Acid	-1	#31408f	normal	2	0
+3BE6	Siderophore	-1	#31408f	normal	2	0
+3BRS	Sugar	-1	#31408f	normal	2	0
+3C9H	Iron	-1	#31408f	normal	2	0
+3CFX	Tungstate	-1	#31408f	normal	2	0
+3CFZ	Molybdate, Tungstate	-1	#31408f	normal	2	0
+3CG1	Molybdate, Tungstate	-1	#31408f	normal	2	0
+3CG3	Molybdate, Tungstate	-1	#31408f	normal	2	0
+3CLK	n.d.	-1	#31408f	normal	2	0
+3CVG	Metal	-1	#31408f	normal	2	0
+3CX3	Metal	-1	#31408f	normal	2	0
+3D02	Sugar	-1	#31408f	normal	2	0
+3DEL	Arginine	-1	#31408f	normal	2	0
+3DLN	Glutamate	-1	#31408f	normal	2	0
+3DRF	Oligopeptide	-1	#31408f	normal	2	0
+3E4R	Alkanesulfonate 	-1	#31408f	normal	2	0
+3EAF	n.d.	-1	#31408f	normal	2	0
+3EIW	Staphyloferrin A	-1	#31408f	normal	2	0
+3EJW	Sugar	-1	#31408f	normal	2	0
+3FAT	Glutamate	-1	#31408f	normal	2	0
+3FXB	Ectoine	-1	#31408f	normal	2	0
+3G1W	Sugar	-1	#31408f	normal	2	0
+3G85	n.d.	-1	#31408f	normal	2	0
+3GBV	n.d.	-1	#31408f	normal	2	0
+3GFV	Petrobactin	-1	#31408f	normal	2	0
+3GI1	Metal	-1	#31408f	normal	2	0
+3GXA	Methionine	-1	#31408f	normal	2	0
+3GYB	n.d.	-1	#31408f	normal	2	0
+3H5L	Branched-Chain Amino Acids	-1	#31408f	normal	2	0
+3H75	Sugar	-1	#31408f	normal	2	0
+3H7M	n.d.	-1	#31408f	normal	2	0
+3HH8	Metal	-1	#31408f	normal	2	0
+3HJT	Zinc	-1	#31408f	normal	2	0
+3HN0	Nitrate	-1	#31408f	normal	2	0
+3HUT	Branched Chain Amino Acids	-1	#31408f	normal	2	0
+3HV1	Polar Amino Acid	-1	#31408f	normal	2	0
+3HXP	Iron(iii) Hydroxamate	-1	#31408f	normal	2	0
+3I09	Branched-Chain Amino Acids	-1	#31408f	normal	2	0
+3I3V	n.d.	-1	#31408f	normal	2	0
+3I45	n.d.	-1	#31408f	normal	2	0
+3I6V	Amino Acid	-1	#31408f	normal	2	0
+3IP5	Amino Acids	-1	#31408f	normal	2	0
+3IX1	Formylaminopyrimidine	-1	#31408f	normal	2	0
+3JYR	Maltose	-1	#31408f	normal	2	0
+3K01	Acarbose, Matose	-1	#31408f	normal	2	0
+3K2D	Methionine	-1	#31408f	normal	2	0
+3K4U	Amino Acid	-1	#31408f	normal	2	0
+3K6U	Molybdate	-1	#31408f	normal	2	0
+3K9C	n.d.	-1	#31408f	normal	2	0
+3KKE	n.d.	-1	#31408f	normal	2	0
+3KS9	Glutamate	-1	#31408f	normal	2	0
+3KSM	Sugar	-1	#31408f	normal	2	0
+3KZG	Arginine	-1	#31408f	normal	2	0
+3L49	Monosaccharide	-1	#31408f	normal	2	0
+3L6H	Betaine	-1	#31408f	normal	2	0
+3L6U	Sugar	-1	#31408f	normal	2	0
+3LKB	Branched-Chain Amino Acids	-1	#31408f	normal	2	0
+3LMK	Glutamate	-1	#31408f	normal	2	0
+3LOP	n.d.	-1	#31408f	normal	2	0
+3LR1	Tungstate	-1	#31408f	normal	2	0
+3M8U	Heme	-1	#31408f	normal	2	0
+3M9W	D-Xylose	-1	#31408f	normal	2	0
+3MD9	Heme	-1	#31408f	normal	2	0
+3MFQ	Zinc	-1	#31408f	normal	2	0
+3MIZ	n.d.	-1	#31408f	normal	2	0
+3MPK	n.d.	-1	#31408f	normal	2	0
+3MQ4	Glutamate	-1	#31408f	normal	2	0
+3MST	Nitrate	-1	#31408f	normal	2	0
+3MWF	Siderophore	-1	#31408f	normal	2	0
+3N5L	Phosphonate	-1	#31408f	normal	2	0
+3O66	Glycine Betaine/Carnitine/Choline	-1	#31408f	normal	2	0
+3O9P	Peptide	-1	#31408f	normal	2	0
+3OEK	Glutamate	-1	#31408f	normal	2	0
+3OLZ	Glutamate	-1	#31408f	normal	2	0
+3OM0	Glutamate	-1	#31408f	normal	2	0
+3OMB	n.d.	-1	#31408f	normal	2	0
+3OO6	Galactose	-1	#31408f	normal	2	0
+3P7I	Phosphonate	-1	#31408f	normal	2	0
+3PPN	Glycine Betaine/Carnitine/Choline	-1	#31408f	normal	2	0
+3PSA	Metal	-1	#31408f	normal	2	0
+3PU5	n.d.	-1	#31408f	normal	2	0
+3QAX	Arginine	-1	#31408f	normal	2	0
+3QEK	Nmda	-1	#31408f	normal	2	0
+3QUF	n.d.	-1	#31408f	normal	2	0
+3R5S	Ferric Vibriobactin	-1	#31408f	normal	2	0
+3R6U	Choline	-1	#31408f	normal	2	0
+3ROT	Sugar	-1	#31408f	normal	2	0
+3RPW	n.d.	-1	#31408f	normal	2	0
+3RQT	n.d.	-1	#31408f	normal	2	0
+3RY3	n.d.	-1	#31408f	normal	2	0
+3S99	Purine	-1	#31408f	normal	2	0
+3S9E	Glutamate	-1	#31408f	normal	2	0
+3SAJ	Glutamate	-1	#31408f	normal	2	0
+3SG0	Aromatic Compounds	-1	#31408f	normal	2	0
+3T66	Nickel	-1	#31408f	normal	2	0
+3T95	Autoinducer 2	-1	#31408f	normal	2	0
+3TCF	Oligopeptide	-1	#31408f	normal	2	0
+3TD9	Branched-Chain Amino Acids	-1	#31408f	normal	2	0
+3TEF	Siderophore 	-1	#31408f	normal	2	0
+3TLK	Ferrienterobactin	-1	#31408f	normal	2	0
+3TMG	Glycine Betaine/Proline	-1	#31408f	normal	2	0
+3TNY	Siderophore 	-1	#31408f	normal	2	0
+3TPA	Heme	-1	#31408f	normal	2	0
+3TQL	Arginine	-1	#31408f	normal	2	0
+3TQW	Methionine	-1	#31408f	normal	2	0
+3TTL	Spermidine 	-1	#31408f	normal	2	0
+3TTM	Putrescine	-1	#31408f	normal	2	0
+3U65	n.d.	-1	#31408f	normal	2	0
+3UIF	Sulfonate	-1	#31408f	normal	2	0
+3UK0	Aromatic Compounds	-1	#31408f	normal	2	0
+3UKJ	Aromatic Compounds	-1	#31408f	normal	2	0
+3UN6	n.d.	-1	#31408f	normal	2	0
+3UOR	Maltose	-1	#31408f	normal	2	0
+3UP9	Methionine 	-1	#31408f	normal	2	0
+3URM	Sugar	-1	#31408f	normal	2	0
+3VV5	Amino Acid	-1	#31408f	normal	2	0
+3VXB	Sugar	-1	#31408f	normal	2	0
+3ZKK	Sugar	-1	#31408f	normal	2	0
+3ZS6	Oligopeptide	-1	#31408f	normal	2	0
+4AB5	n.d.	-1	#31408f	normal	2	0
+4AQ4	Diester	-1	#31408f	normal	2	0
+4BBP	Zinc	-1	#31408f	normal	2	0
+4C0R	Cystine / Glutathione	-1	#31408f	normal	2	0
+4CL2	Metal	-1	#31408f	normal	2	0
+4ECF	Phosphate	-1	#31408f	normal	2	0
+4EDP	n.d.	-1	#31408f	normal	2	0
+4EF1	Methionine	-1	#31408f	normal	2	0
+4ELO	Iron	-1	#31408f	normal	2	0
+4EQ7	Polyamine	-1	#31408f	normal	2	0
+4EQ9	Glutathione	-1	#31408f	normal	2	0
+4EQB	Spermidine, Putrescine	-1	#31408f	normal	2	0
+4EVQ	n.d.	-1	#31408f	normal	2	0
+4EVS	Aromatic Compounds	-1	#31408f	normal	2	0
+4EXL	Phosphate	-1	#31408f	normal	2	0
+4EY3	n.d.	-1	#31408f	normal	2	0
+4F06	n.d.	-1	#31408f	normal	2	0
+4F11	Gaba	-1	#31408f	normal	2	0
+4F18	Phosphate	-1	#31408f	normal	2	0
+4F3P	Glutamine	-1	#31408f	normal	2	0
+4F3S	Alanine	-1	#31408f	normal	2	0
+4FAJ	Peptide	-1	#31408f	normal	2	0
+4FNA	Metal	-1	#31408f	normal	2	0
+4G68	n.d.	-1	#31408f	normal	2	0
+4GD5	Phosphate	-1	#31408f	normal	2	0
+4GL0	Spermidine, Putrescine	-1	#31408f	normal	2	0
+4GL8	Oligopeptide	-1	#31408f	normal	2	0
+4GNR	Branched-Chain Amino Acids	-1	#31408f	normal	2	0
+4GOT	Methionine	-1	#31408f	normal	2	0
+4GVO	Cystine	-1	#31408f	normal	2	0
+4H1X	Phosphate	-1	#31408f	normal	2	0
+4H5F	Amino Acid	-1	#31408f	normal	2	0
+4HMO	Chelated Iron	-1	#31408f	normal	2	0
+4HN9	Iron Complex	-1	#31408f	normal	2	0
+4HS7	n.d.	-1	#31408f	normal	2	0
+4I1D	Aromatic Acids	-1	#31408f	normal	2	0
+4I62	Amino Acid	-1	#31408f	normal	2	0
+4IIL	Riboflavin	-1	#31408f	normal	2	0
+4INO	Nickel	-1	#31408f	normal	2	0
+4IO2	Glutamate	-1	#31408f	normal	2	0
+4IRX	Inositol	-1	#31408f	normal	2	0
+4JB0	Aromatic Compounds	-1	#31408f	normal	2	0
+4JCC	Iron Compound	-1	#31408f	normal	2	0
+4JOQ	Ribose	-1	#31408f	normal	2	0
+4JWO	Phosphate	-1	#31408f	normal	2	0
+4K3F	n.d.	-1	#31408f	normal	2	0
+4K3V	Manganese	-1	#31408f	normal	2	0
+4KD5	Molybdate	-1	#31408f	normal	2	0
+4KQ9	Ribose	-1	#31408f	normal	2	0
+4KQC	n.d.	-1	#31408f	normal	2	0
+4KV7	Leu, Ile, Val	-1	#31408f	normal	2	0
+4KVF	Rhamnose	-1	#31408f	normal	2	0
+4KZK	Arabinose	-1	#31408f	normal	2	0
+4LA9	Glutamine	-1	#31408f	normal	2	0
+4LJS	n.d.	-1	#31408f	normal	2	0
+4LN5	n.d.	-1	#31408f	normal	2	0
+4LQ2	O-Acetylserine	-1	#31408f	normal	2	0
+4LVQ	Phosphate	-1	#31408f	normal	2	0
+4M7O	Iron	-1	#31408f	normal	2	0
+4M88	Amino Acids	-1	#31408f	normal	2	0
+4MAG	Sialic Acid	-1	#31408f	normal	2	0
+4MBP	Maltose	-1	#31408f	normal	2	0
+4MCO	Malonate	-1	#31408f	normal	2	0
+4MDY	n.d.	-1	#31408f	normal	2	0
+4MF3	Glutamate 	-1	#31408f	normal	2	0
+4MFI	Glycerophosphocholine	-1	#31408f	normal	2	0
+4MIJ	Galacturonate	-1	#31408f	normal	2	0
+4MLC	n.d.	-1	#31408f	normal	2	0
+4MLZ	n.d.	-1	#31408f	normal	2	0
+4MMP	Sialic Acid	-1	#31408f	normal	2	0
+4MNC	Benzoyl Formate	-1	#31408f	normal	2	0
+4MNP	Sialic Acid	-1	#31408f	normal	2	0
+4MO9	n.d.	-1	#31408f	normal	2	0
+4MQE	Gaba	-1	#31408f	normal	2	0
+4MX6	Succinate	-1	#31408f	normal	2	0
+4MX8	n.d.	-1	#31408f	normal	2	0
+4N01	n.d.	-1	#31408f	normal	2	0
+4N03	Branched-Chain Amino Acids	-1	#31408f	normal	2	0
+4N0Q	Leu, Ile, Val	-1	#31408f	normal	2	0
+4N13	Phosphate	-1	#31408f	normal	2	0
+4N15	Glucuronate 	-1	#31408f	normal	2	0
+4N4U	n.d.	-1	#31408f	normal	2	0
+4N6D	n.d.	-1	#31408f	normal	2	0
+4N6K	Diglycerolphosphate	-1	#31408f	normal	2	0
+4N8G	D-Ala-D-Ala	-1	#31408f	normal	2	0
+4N8Y	D-Galacturonate	-1	#31408f	normal	2	0
+4N91	D-Glucuronate	-1	#31408f	normal	2	0
+4ND9	Proline Glycine Betain	-1	#31408f	normal	2	0
+4NF0	L-Maltate	-1	#31408f	normal	2	0
+4NG7	n.d.	-1	#31408f	normal	2	0
+4NGU	D-Ala-D-Ala	-1	#31408f	normal	2	0
+4NHB	Sn-Glycerol 3-Phosphate	-1	#31408f	normal	2	0
+4NMY	Thiamine	-1	#31408f	normal	2	0
+4NN3	Orotic Acid	-1	#31408f	normal	2	0
+4NQ8	(R)-Pantoate	-1	#31408f	normal	2	0
+4NQR	Amino Acid, Amide	-1	#31408f	normal	2	0
+4NTL	n.d.	-1	#31408f	normal	2	0
+4NX1	D-Taluronate	-1	#31408f	normal	2	0
+4O7M	L-Malate	-1	#31408f	normal	2	0
+4O8M	Galactonate	-1	#31408f	normal	2	0
+4O94	Succinate	-1	#31408f	normal	2	0
+4OAN	(S)-2-Acetolactate	-1	#31408f	normal	2	0
+4OEN	Amino Acid	-1	#31408f	normal	2	0
+4OER	Nickel	-1	#31408f	normal	2	0
+4OET	Peptide	-1	#31408f	normal	2	0
+4OHN	Histidine 	-1	#31408f	normal	2	0
+4OMB	Phosphate	-1	#31408f	normal	2	0
+4ONY	n.d.	-1	#31408f	normal	2	0
+4OVJ	n.d.	-1	#31408f	normal	2	0
+4OVK	n.d.	-1	#31408f	normal	2	0
+4OVQ	D-Glucuronate	-1	#31408f	normal	2	0
+4OVR	D-Galacturonate 	-1	#31408f	normal	2	0
+4OVS	Succinate	-1	#31408f	normal	2	0
+4OVT	Fuconate	-1	#31408f	normal	2	0
+4OXQ	Metal	-1	#31408f	normal	2	0
+4P0I	Nopaline	-1	#31408f	normal	2	0
+4P1E	n.d.	-1	#31408f	normal	2	0
+4P3L	D-Glucuronate	-1	#31408f	normal	2	0
+4P47	n.d.	-1	#31408f	normal	2	0
+4P56	Mandelate	-1	#31408f	normal	2	0
+4P8B	(S)-2-Acetolactate	-1	#31408f	normal	2	0
+4P98	n.d.	-1	#31408f	normal	2	0
+4P9K	D-Erthyronate	-1	#31408f	normal	2	0
+4PAF	4-Hydroxybenzoate	-1	#31408f	normal	2	0
+4PAG	n.d.	-1	#31408f	normal	2	0
+4PAK	(R)-Pantoate	-1	#31408f	normal	2	0
+4PBQ	L-Gulonate	-1	#31408f	normal	2	0
+4PC9	D-Mannonate	-1	#31408f	normal	2	0
+4PDD	D-Erythronate	-1	#31408f	normal	2	0
+4PDH	D-Erythronate	-1	#31408f	normal	2	0
+4PE3	n.d.	-1	#31408f	normal	2	0
+4PE6	n.d.	-1	#31408f	normal	2	0
+4PET	Calcium Pyruvate	-1	#31408f	normal	2	0
+4PEV	n.d.	-1	#31408f	normal	2	0
+4PF6	C4-dicarboxylate	-1	#31408f	normal	2	0
+4PF8	D-Galacturonate	-1	#31408f	normal	2	0
+4PFB	Sn-Glycerol 3-Phosphate	-1	#31408f	normal	2	0
+4PFI	n.d.	-1	#31408f	normal	2	0
+4PFR	n.d.	-1	#31408f	normal	2	0
+4PGN	3-Indole Pyruvate	-1	#31408f	normal	2	0
+4PM4	Siderophore 	-1	#31408f	normal	2	0
+4PRS	Arginine	-1	#31408f	normal	2	0
+4PZ0	Autoinducer 2	-1	#31408f	normal	2	0
+4Q5T	n.d.	-1	#31408f	normal	2	0
+4Q6W	Leu, Ile, Val	-1	#31408f	normal	2	0
+4QBA	Citrate	-1	#31408f	normal	2	0
+4QFK	Dipeptide	-1	#31408f	normal	2	0
+4QHQ	Methionine	-1	#31408f	normal	2	0
+4QRZ	Sugar	-1	#31408f	normal	2	0
+4R2B	Sugar	-1	#31408f	normal	2	0
+4R2F	Sugar	-1	#31408f	normal	2	0
+4R6H	n.d.	-1	#31408f	normal	2	0
+4R6K	n.d.	-1	#31408f	normal	2	0
+4R6Y	n.d.	-1	#31408f	normal	2	0
+4R72	n.d.	-1	#31408f	normal	2	0
+4R9F	Sugar	-1	#31408f	normal	2	0
+4RA1	Agrocinopine A	-1	#31408f	normal	2	0
+4RK0	Sugar	-1	#31408f	normal	2	0
+4RK1	Ribose	-1	#31408f	normal	2	0
+4RK2	Sugar	-1	#31408f	normal	2	0
+4RK9	Sugar	-1	#31408f	normal	2	0
+4RSM	Threitol	-1	#31408f	normal	2	0
+4RU0	Branched Chain Amino Acids	-1	#31408f	normal	2	0
+4RU1	Monosaccharide	-1	#31408f	normal	2	0
+4RXL	Molybdate	-1	#31408f	normal	2	0
+4RXM	Sugar	-1	#31408f	normal	2	0
+4RXT	Sugar	-1	#31408f	normal	2	0
+4RXU	Sugar	-1	#31408f	normal	2	0
+4RY1	n.d.	-1	#31408f	normal	2	0
+4RY8	n.d.	-1	#31408f	normal	2	0
+4RY9	n.d.	-1	#31408f	normal	2	0
+4RYA	Sugar Alcohol	-1	#31408f	normal	2	0
+4UA8	Carbohydrate	-1	#31408f	normal	2	0
+4UAB	Ethanolamine	-1	#31408f	normal	2	0
+4WED	n.d.	-1	#31408f	normal	2	0
+4WEP	Glycine Betaine	-1	#31408f	normal	2	0
+4WT7	Ribose	-1	#31408f	normal	2	0
+4WUT	Ribose	-1	#31408f	normal	2	0
+4WWH	Sugar	-1	#31408f	normal	2	0
+4WXJ	Glutamate	-1	#31408f	normal	2	0
+4WZZ	Sugar	-1	#31408f	normal	2	0
+4X8R	Glucuronate	-1	#31408f	normal	2	0
+4X9T	n.d.	-1	#31408f	normal	2	0
+4XAQ	Glutamate	-1	#31408f	normal	2	0
+4XAR	Glutamate	-1	#31408f	normal	2	0
+4XEQ	(R)-Pantoic Acid	-1	#31408f	normal	2	0
+4XFE	D-Glucuronate	-1	#31408f	normal	2	0
+4XFK	Branched-Chain Amino Acids	-1	#31408f	normal	2	0
+4XRV	Zinc	-1	#31408f	normal	2	0
+4XZ6	Glycine Betaine/Proline	-1	#31408f	normal	2	0
+4Y9T	Amino Sugars	-1	#31408f	normal	2	0
+4YAH	Methionine	-1	#31408f	normal	2	0
+4YHS	Monosaccharide	-1	#31408f	normal	2	0
+4YIC	n.d.	-1	#31408f	normal	2	0
+4YKI	Glutamate	-1	#31408f	normal	2	0
+4YLE	n.d.	-1	#31408f	normal	2	0
+4YMX	Amino Acid	-1	#31408f	normal	2	0
+4YO7	Sugar	-1	#31408f	normal	2	0
+4YS6	n.d.	-1	#31408f	normal	2	0
+4YV7	n.d.	-1	#31408f	normal	2	0
+4YWH	Xylose	-1	#31408f	normal	2	0
+4Z0N	n.d.	-1	#31408f	normal	2	0
+4Z7E	n.d.	-1	#31408f	normal	2	0
+4Z9N	Amino Acid	-1	#31408f	normal	2	0
+4ZDM	Glutamate	-1	#31408f	normal	2	0
+4ZEF	Glutamine	-1	#31408f	normal	2	0
+4ZJP	Monosaccharide	-1	#31408f	normal	2	0
+4ZPJ	n.d.	-1	#31408f	normal	2	0
+4ZS9	Raffinose, Panose	-1	#31408f	normal	2	0
+5BQ3	Rhamnose	-1	#31408f	normal	2	0
+5BRA	Ribose	-1	#31408f	normal	2	0
+5BWJ	n.d.	-1	#31408f	normal	2	0
+5CI5	Sugar	-1	#31408f	normal	2	0
+5CM6	n.d.	-1	#31408f	normal	2	0
+5CR9	Iron(iii) Hydroxamate	-1	#31408f	normal	2	0
+5DH0	Siderophore	-1	#31408f	normal	2	0
+5DKV	Ribose	-1	#31408f	normal	2	0
+5DTE	Monosaccharide	-1	#31408f	normal	2	0
+5DVF	Sugar	-1	#31408f	normal	2	0
+5E7U	Maltose	-1	#31408f	normal	2	0
+5EWJ	Glutamate	-1	#31408f	normal	2	0
+5EYF	Glutamate	-1	#31408f	normal	2	0
+5F1Q	Dipeptide	-1	#31408f	normal	2	0
+5FLY	Ferrichrome	-1	#31408f	normal	2	0
+5FTH	Glutamate	-1	#31408f	normal	2	0
+5H8F	Glutamate	-1	#31408f	normal	2	0
+5HKO	Xylitol	-1	#31408f	normal	2	0
+5HQJ	Arabinose	-1	#31408f	normal	2	0
+5HSG	n.d.	-1	#31408f	normal	2	0
+5HX7	Manganese	-1	#31408f	normal	2	0
+5I84	Phosphate	-1	#31408f	normal	2	0
+5IAI	Sugar	-1	#31408f	normal	2	0
+5IBQ	Ribose	-1	#31408f	normal	2	0
+5IM2	n.d.	-1	#31408f	normal	2	0
+5ISU	n.d.	-1	#31408f	normal	2	0
+5IX8	Sugar	-1	#31408f	normal	2	0
+5IXP	n.d.	-1	#31408f	normal	2	0
+5JK4	Phosphate	-1	#31408f	normal	2	0
+BU310722	urea	-1	#31408f	normal	2	0
+BU313432	n.d.	-1	#31408f	normal	2	0
+C0926319	Mn2+/Zn2+	-1	#31408f	normal	2	0
+PSSM2248	n.d.	-1	#31408f	normal	2	0
+SG300122	phospholipid-liposaccharide	-1	#31408f	normal	2	0
+SG300185	ATP	-1	#31408f	normal	2	0
+SG300186	phosphonate/phosphate	-1	#31408f	normal	2	0
+SG300188	n.d.	-1	#31408f	normal	2	0
+SG300190	iron	-1	#31408f	normal	2	0
+SG300197	phosphate	-1	#31408f	normal	2	0
+SG300270	n.d.	-1	#31408f	normal	2	0
+SG300311	ATP	-1	#31408f	normal	2	0
+SG300595	ATP	-1	#31408f	normal	2	0
+SG300662	metal	-1	#31408f	normal	2	0
+SG300788	amino acid	-1	#31408f	normal	2	0
+SG300791	amino acid	-1	#31408f	normal	2	0
+SG300792	amino acid	-1	#31408f	normal	2	0
+SG300912	phosphate	-1	#31408f	normal	2	0
+SG301000	n.d.	-1	#31408f	normal	2	0
+SG301030	ATP	-1	#31408f	normal	2	0
+SG301077	glutamate/aspartate	-1	#31408f	normal	2	0
+SG301318	ATP	-1	#31408f	normal	2	0
+SG301345	ATP	-1	#31408f	normal	2	0
+SG301364	glycine betaine	-1	#31408f	normal	2	0
+SG301368	zinc	-1	#31408f	normal	2	0
+SG301372	iron	-1	#31408f	normal	2	0
+SG301376	iron	-1	#31408f	normal	2	0
+SG301406	n.d.	-1	#31408f	normal	2	0
+SH0147	n.d.	-1	#31408f	normal	2	0
+SH0201	n.d.	-1	#31408f	normal	2	0
+SH0267	sugar	-1	#31408f	normal	2	0
+SH0268	sugar	-1	#31408f	normal	2	0
+SH0271	n.d.	-1	#31408f	normal	2	0
+SH0371	n.d.	-1	#31408f	normal	2	0
+SH0655	amino acid	-1	#31408f	normal	2	0
+SH0658	n.d.	-1	#31408f	normal	2	0
+SH0659	amino acid	-1	#31408f	normal	2	0
+SH0769	sugar	-1	#31408f	normal	2	0
+SH0772	sugar	-1	#31408f	normal	2	0
+SH0797	n.d.	-1	#31408f	normal	2	0
+SH0798	Glycine Betaine/Proline	-1	#31408f	normal	2	0
+SH0806	taurin	-1	#31408f	normal	2	0
+SH0807	taurin	-1	#31408f	normal	2	0
+SH0812	ATP	-1	#31408f	normal	2	0
+SH0850	ATP	-1	#31408f	normal	2	0
+SH0905	ATP	-1	#31408f	normal	2	0
+SH0953	n.d.	-1	#31408f	normal	2	0
+SH0957	ATP	-1	#31408f	normal	2	0
+SH1068	n.d.	-1	#31408f	normal	2	0
+SH1080	amino acid	-1	#31408f	normal	2	0
+SH1176	phosphate	-1	#31408f	normal	2	0
+SH1210	n.d.	-1	#31408f	normal	2	0
+SH1236	iron	-1	#31408f	normal	2	0
+SH1238	iron	-1	#31408f	normal	2	0
+SH1298	Glycine Betaine/Proline	-1	#31408f	normal	2	0
+SH1302	glycine betaine	-1	#31408f	normal	2	0
+SH1336	spermidine, Putrescine	-1	#31408f	normal	2	0
+SH1337	ATP	-1	#31408f	normal	2	0
+SH1346	n.d.	-1	#31408f	normal	2	0
+SH1351	ATP	-1	#31408f	normal	2	0
+SH1352	ATP	-1	#31408f	normal	2	0
+SH1357	ATP	-1	#31408f	normal	2	0
+SH1358	ATP	-1	#31408f	normal	2	0
+SH1361	amino acid	-1	#31408f	normal	2	0￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿￿
