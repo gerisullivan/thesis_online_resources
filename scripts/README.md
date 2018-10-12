@@ -1,0 +1,1 @@
+Link to nucl\_gb.accession2taxid.gz, on OneDrive due to GitHub size limits: https://mqoutlook-my.sharepoint.com/:t:/g/personal/geraldine_sullivan_hdr_mq_edu_au/EXlZaQp4JqxCjHgnmb_VJwcBCaXHETq5YU_ITVYodSqdJA?e=etGaS4
