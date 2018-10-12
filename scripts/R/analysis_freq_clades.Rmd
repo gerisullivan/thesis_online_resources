@@ -1,0 +1,535 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+In this notebook we are making a tidy table to investigate the  distribution of SBPs that can be assigned to marine cyanobacteria genomes and focussing on the IMOS NRS time series.
+
+we performed taxonomic classification of the SBP gene sequences against the nt database (we extracted all potential SBPs assigned to Synechococcus or Prochlorococcus based on the top-hit approach). The choice of top-hit over more conservative LCA approach because, 1. we want to gather any potentially undiscovered diversity, 2.  we will cross check the taxonomic assignments using a custom complete genome database (cyanorak)
+
+Using blastn, against cyanorak and against nt we are going to build a tidy table 
+
+#load packages
+```{r}
+library(tidyverse)
+library(gplots)
+library(oce)
+library(ggpubr)
+library(dplyr)
+library(plyr)
+library(corrplot)
+```
+
+#import abundance data
+```{r}
+setwd("~/Dropbox/SBPs/tidy.table/")
+
+all.abund<-read_tsv("all_abund_nrs_norm") #56624 observations, 183 variables
+
+crak_data<-read_tsv("~/Dropbox/SBPs/tidy.table/crak_data.txt")
+```
+
+#gather data into individual lines
+```{r}
+all.abund.gather<-gather(all.abund, site, abundance, -gene) #splitting genes into abundances per site, 10305568 observations, 3 variables
+```
+
+# function to extract all of the important info out of the sample/site name codes
+```{r}
+#site info must be in a column called "site"
+site_info<-function(x){
+sites<-x[,"site"]
+sites$loc<-as.character(substr(sites$site, 1, 3))
+sites$year<-as.character(substr(sites$site, 4, 7))
+sites$monthnum<-as.numeric(substr(sites$site, 8, 9))
+sites$monthabr<-month.name[sites$monthnum]
+sites$day<-as.numeric(substr(sites$site, 10,11))
+sites$depth<-as.numeric(substr(sites$site, 13,15))
+sites<-sites[2:nrow(sites),]
+row.names(sites)<-NULL
+return(sites)
+}
+
+all.abund.gather.nz<-filter(all.abund.gather, all.abund.gather$abundance!=0) #remove all genes and site combinations with 0 abundance
+site.info<-site_info(all.abund.gather.nz) #get site info using the site_info function above
+colnames(site.info)[1]<-"site" #rename column for merge
+
+all.abund.gather.nz<-inner_join(all.abund.gather.nz, unique(site.info), by="site") #join site info and abundance data together
+
+```
+
+#bash taxonomy scripts
+Merge/join the tophit taxonomy extracted from blastn against the nt database. Took 56,000 potential SBP genes and assigned them to ncbi lineages based on the best Blast hit in the nt database
+```{bash}
+for i in x*nt; do blastn -db /disks/jen/scratch-ssd/db/nt -outfmt='6 qseqid sseqid pident length mismatch gapopen qlen qstart qend sstart send evalue bitscore' -max_target_seqs 1 -best_hit_overhang 0.1 -ungapped -dust no -num_threads=2 -query $i -out $i.vnt.out & done
+
+sort -u -t$'\t' -k1,1  allsbps.vnt.out > allsbps.vnt.out.u #remove duplicates
+```
+
+#import taxonomy data
+```{r}
+setwd("~/Dropbox/SBPs/tidy.table/")
+nt.blast<-read_tsv("allsbps.vnt.out.u", col_names=F) #read in bash taxonomy information
+
+hist(nt.blast$X3) #histogram of the percent identity levels
+
+#load the ncbi taxid to lineage file, decide on a threshold for filtering and then join the blast output
+taxid2lin<-read_tsv("taxid2lineages_2017.tab") #read in taxid2lineage file
+```
+
+#extract the taxid from the accession number
+```{r}
+setwd("~/Dropbox/SBPs/tidy.table/")
+acc2taxid<-read_tsv("nucl_gb.accession2taxid") #read in accession to taxid file
+```
+
+#85% cutoff
+```{r}
+nt.blast.taxid85<-nt.blast %>% filter(X3 > 85) %>% inner_join(acc2taxid, by=c("X2" = "accession.version"))
+#nt.blast.taxid<-nt.blast %>% inner_join(acc2taxid, by=c("X2" = "accession.version"))
+```
+
+#Join the top-hit blast results for ~56,000 potential SBPs with the ncbi lineage
+```{r}
+nt.blast.lineage85<-nt.blast.taxid85 %>%
+  inner_join(taxid2lin, by=c("taxid" = "tax_id"))
+
+#nt.blast.lineage.all<-nt.blast.taxid.all %>% inner_join(taxid2lin, by=c("taxid" = "tax_id"))
+```
+
+
+#combine the ncbi taxonomy, abundance, and crak taxonomy
+```{r}
+#all.abund.wtax_all<-all.abund.gather.nz %>% full_join(nt.blast.lineage.all, by=c("gene"="X1"))
+
+all.abund.wtax85<-all.abund.gather.nz %>%
+  full_join(nt.blast.lineage85, by=c("gene"="X1"))
+
+colnames(all.abund.wtax85)[4]<-"blast.acc"
+colnames(all.abund.wtax85)[5]<-"blast.pid"
+colnames(all.abund.wtax85)[14]<-"blast.evalue"
+
+all.abund.wtax85[is.na(all.abund.wtax85)]<-"unassigned"
+#write_csv(all.abund.wtax[,c(1:5, 14:19)], "~/Dropbox/SBPs/tidy.table/all.sbps.abund.w.lineage")
+
+all.abund.wtax.crak85<-all.abund.wtax85 %>%
+  full_join(crak_data, by="gene")
+```
+
+
+#import cluster_gene data
+```{r}
+cluster_gene<-read_tsv("~/Dropbox/SBPs/clus_gene_56624")
+
+#sbp.tady.table<-read_csv("~/Dropbox/SBPs/tidy.table/all.sbps.abund.w.lineage"
+
+sbp.tidy.table<-all.abund.wtax.crak85 %>%
+  inner_join(cluster_gene, by="gene") #add cluster and taxonomy to corresponding gene
+
+#write.csv(file="~/Dropbox/SBPs/tidy.table/sbp.tidy.table", x=sbp.tidy.table) 
+#import if crashes
+```
+
+
+#extract all cyanos SBPs, all pelagibacteraceae SBPS
+```{r}
+pro_sbps <- sbp.tidy.table[grep("Prochlorococcus", sbp.tidy.table$`superkingdom,phylum,class,order,family,genus,species`),]
+pro_sbps<-pro_sbps[grep("Pro", pro_sbps$synpro),]
+pro_sbps<-pro_sbps[,c(1,25,27,31)]
+sort(table(unique(pro_sbps)$cluster), decreasing = TRUE)
+length(unique(pro_sbps$gene))
+
+syn_sbps<-sbp.tidy.table[grep("Synechococcus", sbp.tidy.table$`superkingdom,phylum,class,order,family,genus,species`),]
+syn_sbps<-syn_sbps[grep("Syn", syn_sbps$synpro),]
+syn_sbps<-syn_sbps[,c(1,25,27,31)]
+length(unique(syn_sbps$gene))
+sort(table(unique(syn_sbps)$cluster), decreasing = TRUE)
+
+sar11_sbps<-sbp.tidy.table[grep('Pelagibacteraceae', sbp.tidy.table$`superkingdom,phylum,class,order,family,genus,species`),]
+length(unique(sar11_sbps$gene))
+sar11_sbps<-sar11_sbps[,c(1,25,27,31)]
+sort(table(unique(sar11_sbps)$cluster), decreasing = TRUE)
+
+#rev(sort(table(nt.blast.lineage85$`superkingdom,phylum,class,order,family,genus,species`))) # this could go to a kronaplot or an overview of sbp diversity.
+
+```
+
+#tables / frequencies
+```{r}
+pro_clus<-pro_sbps[,c(1,31)]
+sort(table(unique(pro_clus)$cluster), decreasing = TRUE)
+
+syn_clus<-syn_sbps[,c(1,31)]
+sort(table(unique(syn_clus)$cluster), decreasing = TRUE)
+
+sar11_clus<-sar11_sbps[,c(1,31)]
+sort(table(unique(sar11_clus)$cluster), decreasing = TRUE)
+```
+
+#top 100 synechococcus
+```{r}
+setwd("~/Dropbox/SBPs/syn/10%/")
+nrs<-c("dar", "yon", "nsi", "mai", "kai", "rot", "phb")
+files<-c(paste("", nrs, ".txt", sep=""))
+monthpdf<-c(paste("", nrs, ".month.pdf", sep=""))
+
+months<-c("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December")
+clusters<-read.csv("~/Dropbox/SBPs/clus_gene_56624", h=T, sep='\t')
+
+#rowsums<-read.csv("~/Dropbox/SBPs/Data/nrs500/bymonth/syn/869/rowsums.txt", h=T, sep='\t')
+
+for (i in (1:7)){
+setwd("~/Dropbox/SBPs/syn/10%/")
+  syn<-read.csv(files[i], h=T, sep='\t')
+  attributes(syn)$row.names<-as.character(syn$gene)
+  cols<-length(grep(paste(months, collapse = "|"), colnames(syn)))+1
+  
+    if (i == 1){dar<-as.data.frame(syn)}
+    if (i == 2){yon<-as.data.frame(syn)}
+    if (i == 3){nsi<-as.data.frame(syn)}
+    if (i == 4){mai<-as.data.frame(syn)}
+    if (i == 5){kai<-as.data.frame(syn)}
+    if (i == 6){rot<-as.data.frame(syn)}
+    if (i == 7){phb<-as.data.frame(syn)}
+
+}
+
+all<-merge(dar, yon, by="gene") %>% merge(., nsi, by="gene") %>% merge(., rot, by="gene") %>% merge(., phb, by="gene") %>% merge(., kai, by="gene") %>% merge(., mai, by="gene")
+allclus<-merge(all, clusters, by="gene")
+allclus$geneclus <- with(allclus, paste(gene, sep=" ", cluster))
+attributes(allclus)$row.names<-as.character(allclus$geneclus)
+
+allclus<-allclus[order(allclus$cluster, decreasing = FALSE),]
+
+#heatmap
+setwd("~/Dropbox/SBPs/syn/10%/")
+par(mai=c(7,4,4,2)+0.1)
+pdf("top100_ordered.pdf", width=20, height=20)
+heatmap.2(log(as.matrix(allclus[,c(2:6, 16:25, 44:54, 67:77, 92:100, 113:117, 124:134)])+5), trace="none", col=c("white", rev(oceColorsTemperature(255))), Rowv=F, Colv = F, dendrogram = "none", cexCol = 1, srtCol=45, margins=c(8,18), cexRow = 1)
+dev.off()
+
+#corrplot
+setwd("~/Dropbox/SBPs/syn/10%/")
+metadata <- read.csv("~/Dropbox/SBPs/Data/nrs500/meta.txt", h=T, sep='\t')
+merge<-merge(metadata[1:80,c(1:4, 7:8, 10:20, 25)], t(allclus), by.x="site", by.y=0)
+
+cols = c(19:ncol(merge))
+    merge[,cols] %<>% lapply(function(x) as.numeric(as.character(x)))
+    #corrplot model
+    rownames(merge)<-merge$site
+    model<-cor(merge[,2:ncol(merge)], use="pairwise.complete.obs")
+  
+    colnames(model)
+    
+setwd("~/Dropbox/SBPs/syn/10%/")
+  pdf("top100corr.pdf", width = 20, height = 30)
+    corrplot(model[c(18:117), c(2, 4:15, 17)], method="color", tl.col = "black", tl.cex = 1.5, type="full", tl.srt=45, number.cex=0, cl.cex=1.5)
+dev.off()
+      
+```
+
+#extracting low frequency SBPs for abundance analysis
+```{r}
+sar11grep<-c("tol", "nd$", "sulf", "urea")
+sar11_niche<-unique(sar11_sbps[grep(paste(sar11grep, collapse = "|"), sar11_sbps$cluster),])
+sar11_niche$tax<-c("SAR11")
+
+progrep<-c("braa", "nd$", "malt", "sug3", "glbt", "sug$", "ph")
+pro_niche<-unique(pro_sbps[grep(paste(progrep, collapse = "|"), pro_sbps$cluster),])
+pro_niche$tax<-c("Pro")
+
+syngrep<-c("glu$", "mo$", "nd4")
+syn_niche<-unique(syn_sbps[grep(paste(syngrep, collapse = "|"), syn_sbps$cluster),])
+syn_niche$tax<-c("Syn")
+
+niche_geneclustax<-rbind(sar11_niche, pro_niche, syn_niche)
+
+write.csv("~/Desktop/niche_geneclustax", x=niche_geneclustax)
+
+```
+
+#niche adaptation, lowest frequency SBPs
+```{r}
+##niche adaptation
+setwd("~/Dropbox/SBPs/syn/niche/")
+nrs<-c("dar", "yon", "nsi", "mai", "kai", "rot", "phb")
+files<-c(paste("", nrs, ".txt", sep=""))
+monthpdf<-c(paste("", nrs, ".month.pdf", sep=""))
+
+months<-c("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December")
+clusters<-read.csv("~/Dropbox/SBPs/clus_gene_56624", h=T, sep='\t')
+
+#rowsums<-read.csv("~/Dropbox/SBPs/Data/nrs500/bymonth/syn/869/rowsums.txt", h=T, sep='\t')
+
+for (i in (1:7)){
+setwd("~/Dropbox/SBPs/syn/niche/")
+  syn<-read.csv(files[i], h=T, sep='\t')
+  attributes(syn)$row.names<-as.character(syn$gene)
+  cols<-length(grep(paste(months, collapse = "|"), colnames(syn)))+1
+  
+    if (i == 1){dar<-as.data.frame(syn)}
+    if (i == 2){yon<-as.data.frame(syn)}
+    if (i == 3){nsi<-as.data.frame(syn)}
+    if (i == 4){mai<-as.data.frame(syn)}
+    if (i == 5){kai<-as.data.frame(syn)}
+    if (i == 6){rot<-as.data.frame(syn)}
+    if (i == 7){phb<-as.data.frame(syn)}
+
+}
+
+all<-merge(dar, yon, by="gene") %>% merge(., nsi, by="gene") %>% merge(., rot, by="gene") %>% merge(., phb, by="gene") %>% merge(., kai, by="gene") %>% merge(., mai, by="gene")
+allclus<-merge(all, clusters, by="gene")
+allclus$geneclus <- with(allclus, paste(gene, sep=" ", cluster))
+allclus<-merge(allclus, niche_geneclustax, by="gene")
+
+col<-c("#7f64b9", "#c36785", "#9f9244")
+tax<-c("Pro", "SAR11", "Syn")
+taxcol<-data.frame(tax, col)
+
+allclus<-merge(allclus, taxcol, by="tax", all=T)
+
+attributes(allclus)$row.names<-as.character(allclus$geneclus)
+
+xorder<-c("Syn", "Pro", "SAR11")
+allclus<-allclus[order(match(allclus$tax,xorder), allclus$cluster.x),]
+
+#heatmap
+setwd("~/Dropbox/SBPs/syn/niche/")
+par(mai=c(7,4,4,2)+0.1)
+pdf("nicheplot.pdf", width=20, height=20)
+heatmap.2(log(as.matrix(allclus[,c(3:7, 17:26, 45:55, 68:78, 93:101, 114:118, 125:135)])+5), trace="none", col=c("white", rev(oceColorsTemperature(255))), Rowv=F, Colv = F, dendrogram = "none", cexCol = 1, srtCol=45, margins=c(8,18), cexRow = 1, RowSideColors = as.character(allclus$col))
+legend('left', title="Taxonomy", legend=(taxcol$tax), fill=(as.character((taxcol$col))), cex=1.5)
+dev.off()
+
+#corrplot
+setwd("~/Dropbox/SBPs/syn/niche/")
+metadata <- read.csv("~/Dropbox/SBPs/Data/nrs500/meta.txt", h=T, sep='\t')
+merge<-merge(metadata[,c(1:4, 7:8, 10:20, 25)], t(allclus), by.x="site", by.y=0)
+
+cols = c(19:ncol(merge))
+    merge[,cols] %<>% lapply(function(x) as.numeric(as.character(x)))
+    #corrplot model
+    rownames(merge)<-merge$site
+    model<-cor(merge[,2:ncol(merge)], use="pairwise.complete.obs")
+    colnames(model)
+    
+setwd("~/Dropbox/SBPs/syn/niche/")
+  pdf("nichecorr.pdf", width = 20, height = 30)
+    corrplot(model[c(18:nrow(model)), c(2, 4:17)], method="color", tl.col = "black", tl.cex = 2.5, type="full", tl.srt=45, number.cex=0, cl.cex=1.5)
+dev.off()
+```
+
+
+###clade analysis
+#import crak data and cluster data if not done before
+```{r}
+crak_data<-read_tsv("~/Dropbox/SBPs/syn/clades/syn_crak.txt")
+
+cluster_gene<-read_tsv("~/Dropbox/SBPs/clus_gene_56624")
+colnames(cluster_gene)<-c("cluster", "gene")
+```
+
+#combining the 1064 syn genes
+```{r}
+for (i in (1:7)){
+setwd("~/Dropbox/SBPs/syn/clades/")
+  syn<-read.csv(files[i], h=T, sep='\t')
+  syn<-merge(syn, cluster_gene, by="gene", all.x=T)
+  syn<-syn[,c(ncol(syn),1:(ncol(syn)-1))]
+  attributes(syn)$row.names<-as.character(syn$gene)
+  
+    if (i == 1){dar<-as.data.frame(syn)}
+    if (i == 2){yon<-as.data.frame(syn)}
+    if (i == 3){nsi<-as.data.frame(syn)}
+    if (i == 4){mai<-as.data.frame(syn)}
+    if (i == 5){kai<-as.data.frame(syn)}
+    if (i == 6){rot<-as.data.frame(syn)}
+    if (i == 7){phb<-as.data.frame(syn)}
+}
+
+syn1064<-cbind(dar, yon[-c(1:2)], nsi[-c(1:2)], rot[-c(1:2)], phb[-c(1:2)], kai[-c(1:2)], mai[-c(1:2)]) #combine by row not column
+syn1064$rowsums<-rowSums(syn1064[,3:ncol(syn1064)])
+syn1064$geneclus<- with(syn1064, paste(gene, sep=" ", cluster)) #make new geneclus variable for naming rows
+
+############### #zinc ################
+synzn<-syn1064[grep("zn", syn1064$cluster),]
+synzn<-synzn[order(synzn$rowsums, decreasing = TRUE),]
+synzn = synzn[seq(1, nrow(synzn), 3), ] #take every 2nd binding gene to cover more abundances
+attributes(synzn)$row.names<-as.character(synzn$geneclus) #change rownames to geneclus
+
+setwd("~/Dropbox/SBPs/syn/indclus/")
+pdf("znplot.pdf", width=20, height=20)
+heatmap.2(log(as.matrix(synzn[,c(3:7, 17:26, 45:55, 68:78, 93:101, 114:118, 125:135)])+5), trace="none", col=c("white", rev(oceColorsTemperature(255))), Rowv=F, Colv = F, dendrogram = "none", cexCol = 1, srtCol=45, margins=c(8,18), cexRow = 1) #heatmap
+dev.off()
+
+metadata <- read.csv("~/Dropbox/SBPs/Data/nrs500/meta.txt", h=T, sep='\t') #import metadata
+znmerge<-merge(metadata[,c(1:4, 7:8, 10:20, 25)], t(synzn), by.x="site", by.y=0) #merge zn genes with metadata
+
+cols = c(19:ncol(znmerge)) 
+    znmerge[,cols] %<>% lapply(function(x) as.numeric(as.character(x))) #change columns to numeric so the function works
+    znmodel<-cor(znmerge[,2:ncol(znmerge)], use="pairwise.complete.obs") #make the correlation model
+
+    setwd("~/Dropbox/SBPs/syn/indclus/")
+      pdf("zncorr.pdf", width = 20, height = 32)
+      corrplot(znmodel[c(18:ncol(znmodel)), c(2, 4:15, 17)], method="color", tl.col = "black", tl.cex = 2.5, type="full", tl.srt=45, number.cex=0, cl.cex=1.5) #corrplot
+      dev.off()
+
+################ #phosphate ################
+synp<-syn1064[grep("p$", syn1064$cluster),]
+synp<-synp[order(synp$rowsums, decreasing = TRUE),]
+synp = synp[seq(1, nrow(synp), 3), ] #take every 2nd binding gene to cover more abundances
+attributes(synp)$row.names<-as.character(synp$geneclus) #change rownames to geneclus
+
+setwd("~/Dropbox/SBPs/syn/indclus/")
+pdf("pplot.pdf", width=20, height=20)
+heatmap.2(log(as.matrix(synp[,c(3:7, 17:26, 45:55, 68:78, 93:101, 114:118, 125:135)])+5), trace="none", col=c("white", rev(oceColorsTemperature(255))), Rowv=F, Colv = F, dendrogram = "none", cexCol = 1, srtCol=45, margins=c(8,18), cexRow = 1) #heatmap
+dev.off()
+
+metadata <- read.csv("~/Dropbox/SBPs/Data/nrs500/meta.txt", h=T, sep='\t') #import metadata
+pmerge<-merge(metadata[,c(1:4, 7:8, 10:20, 25)], t(synp), by.x="site", by.y=0) #merge p genes with metadata
+
+cols = c(19:ncol(pmerge)) 
+    pmerge[,cols] %<>% lapply(function(x) as.numeric(as.character(x))) #change columns to numeric so the function works
+    pmodel<-cor(pmerge[,2:ncol(pmerge)], use="pairwise.complete.obs") #make the correlation model
+
+    setwd("~/Dropbox/SBPs/syn/indclus/")
+      pdf("pcorr.pdf", width = 20, height = 32)
+      corrplot(pmodel[c(18:ncol(pmodel)), c(2, 4:15, 17)], method="color", tl.col = "black", tl.cex = 2.5, type="full", tl.srt=45, number.cex=0, cl.cex=1.5) #corrplot
+      dev.off()
+
+################ #sugars ################
+synsug<-syn1064[grep("sug", syn1064$cluster),]
+synsug <- synsug[order(synsug$cluster, -(synsug$rowsums), decreasing = FALSE),]
+synsug <- synsug[seq(1, nrow(synsug), 3), ] #take every 2nd binding gene to cover more abundances
+attributes(synsug)$row.names<-as.character(synsug$geneclus) #change rownames to geneclus
+colnames(synsug)
+
+setwd("~/Dropbox/SBPs/syn/indclus/")
+pdf("sugplot.pdf", width=20, height=20)
+heatmap.2(log(as.matrix(synsug[,c(3:7, 17:26, 45:55, 68:78, 93:101, 114:118, 125:135)])+5), trace="none", col=c("white", rev(oceColorsTemperature(255))), Rowv=F, Colv = F, dendrogram = "none", cexCol = 1, srtCol=45, margins=c(8,18), cexRow = 1) #heatmap
+dev.off()
+
+metadata <- read.csv("~/Dropbox/SBPs/Data/nrs500/meta.txt", h=T, sep='\t') #import metadata
+sugmerge<-merge(metadata[,c(1:4, 7:8, 10:20, 25)], t(synsug), by.x="site", by.y=0) #merge sug genes with metadata
+
+cols = c(19:ncol(sugmerge)) 
+    sugmerge[,cols] %<>% lapply(function(x) as.numeric(as.character(x))) #change columns to numeric so the function works
+    sugmodel<-cor(sugmerge[,2:ncol(sugmerge)], use="pairwise.complete.obs") #make the correlation model
+    
+    setwd("~/Dropbox/SBPs/syn/indclus/")
+      pdf("sugcorr.pdf", width = 20, height = 32)
+      corrplot(sugmodel[c(18:ncol(sugmodel)), c(2, 4:15, 17)], method="color", tl.col = "black", tl.cex = 2.5, type="full", tl.srt=45, number.cex=0, cl.cex=1.5) #corrplot
+      dev.off()
+
+```
+
+#change variables to ligand class category
+```{r}
+
+aanames<-c("aa", "braa", "glu", "met")
+sugnames<-c("sug", "mono", "rib", "malt")
+
+nrs.tidy.crak$col <- ifelse(grepl('p', nrs.tidy.crak$cluster), "#5e89d6", ifelse(grepl('mo', nrs.tidy.crak$cluster), "#76874d", ifelse(grepl(paste(sugnames, collapse="|"), nrs.tidy.crak$cluster), "#918d3c", ifelse(grepl('nd', nrs.tidy.crak$cluster), "#52ba4c", ifelse(grepl(paste(aanames, collapse="|"), nrs.tidy.crak$cluster), "#c75d66", ifelse(grepl('metal', nrs.tidy.crak$cluster), "#94b92c", ifelse(grepl('fe', nrs.tidy.crak$cluster), "#d25a21", ifelse(grepl('glbt', nrs.tidy.crak$cluster), "#ba7c4e", ifelse(grepl('heme', nrs.tidy.crak$cluster), "#d2a12b", ifelse(grepl('oligo', nrs.tidy.crak$cluster), "#61a5d0", ifelse(grepl('ph', nrs.tidy.crak$cluster), "#706cde", ifelse(grepl('sp', nrs.tidy.crak$cluster), "#bd8bd9", ifelse(grepl('sulf', nrs.tidy.crak$cluster), "#b157cd", ifelse(grepl('tol', nrs.tidy.crak$cluster), "#ca4bac", ifelse(grepl('urea', nrs.tidy.crak$cluster), "#b66c93", "#d6447f")))))))))))))))
+
+nrs.tidy.crak$abclus<-ifelse(grepl('p', nrs.tidy.crak$cluster), "p", ifelse(grepl('mo', nrs.tidy.crak$cluster), "mo", ifelse(grepl(paste(sugnames, collapse="|"), nrs.tidy.crak$cluster), "sug", ifelse(grepl('nd', nrs.tidy.crak$cluster), "unknown", ifelse(grepl(paste(aanames, collapse="|"), nrs.tidy.crak$cluster), "aa", ifelse(grepl('metal', nrs.tidy.crak$cluster), "metal", ifelse(grepl('fe', nrs.tidy.crak$cluster), "fe", ifelse(grepl('glbt', nrs.tidy.crak$cluster), "glbt", ifelse(grepl('heme', nrs.tidy.crak$cluster), "heme", ifelse(grepl('oligo', nrs.tidy.crak$cluster), "oligo", ifelse(grepl('ph', nrs.tidy.crak$cluster), "ph", ifelse(grepl('sp', nrs.tidy.crak$cluster), "sp", ifelse(grepl('sulf', nrs.tidy.crak$cluster), "sulf", ifelse(grepl('tol', nrs.tidy.crak$cluster), "tol", ifelse(grepl('urea', nrs.tidy.crak$cluster), "urea", "zn")))))))))))))))
+```
+
+
+#gplots - clade by cluster information
+```{r}
+pdf("~/Dropbox/SBPs/syn/clades/cladecomposition.pdf", width=15, height=10)
+ggbarplot(subset(nrs.tidy.crak, subclade!="NA"), x= "site", y = "val",  color = NA,  fill = "abclus", size = 5, legend = "bottom") + #palette = unique(nrs.tidy.crak$col)
+  labs( x = "NRS Site", y = "Abundance",  title = substitute(paste("Relative Abundance of Clusters by ", italic('Synechococcus'), " Subclade"))) + 
+  font("xlab", size = 15, color = "black")+ 
+  font("ylab", size=15, color = "black") +
+  font("title", size = 15) +
+  facet_wrap(. ~ subclade, drop=T, scales="free")+
+  font("xy.text", size = 10, color = "black") + rotate_x_text(45)+
+ font ("legend.text", size = 10) +
+  font ("legend.title", size = 10) +
+  theme(legend.key.size = unit(1.2, "line")) +
+  theme(axis.text.x = element_text(size=10))
+dev.off()
+```
+
+#import clade colours
+```{r}
+petb_cols2<-read_tsv("~/Dropbox/SBPs/syn/cladecol.txt")
+```
+
+#plots - clade by cluster information
+```{r}
+pdf("~/Dropbox/SBPs/syn/clades/clustercomposition.pdf", width=15, height=10)
+ggbarplot(subset(nrs.tidy.crak, clade!="NA"), x= "site", y = "val",  color = "NA",  fill = "clade", size = 5, alpha = 1,legend = "bottom")+ 
+  labs( x= "NRS Site", y = "Abundance", title = substitute(paste("Relative Abundance of ", italic('Synechococcus'), " Clade by Putative Transported Cluster"))) + 
+  font("xlab", size = 15, color = "black")+ 
+  facet_wrap(. ~ abclus, drop=T) +
+  font("title", size = 15) +
+ font("ylab", size = 15, color = "black") +
+  font("xy.text", size = 10, color = "black") + rotate_x_text(45)+
+ font ("legend.text", size = 10) +
+  font ("legend.title", size = 10) +
+  theme(legend.key.size = unit(1.2, "line")) +
+  theme(axis.text.x = element_text(size=10))
+dev.off()
+```
+
+#top 50 - all taxa
+```{r}
+library(dichromat)
+for (i in (1:7)){
+setwd("~/Dropbox/SBPs/Data/top50_alltaxa/")
+  syn<-read.csv(files[i], h=T, sep='\t')
+  syn<-merge(syn, cluster_gene, by="gene", all.x=T)
+  syn<-syn[,c(ncol(syn),1:(ncol(syn)-1))]
+  attributes(syn)$row.names<-as.character(syn$gene)
+  
+    if (i == 1){dar<-as.data.frame(syn)}
+    if (i == 2){yon<-as.data.frame(syn)}
+    if (i == 3){nsi<-as.data.frame(syn)}
+    if (i == 4){mai<-as.data.frame(syn)}
+    if (i == 5){kai<-as.data.frame(syn)}
+    if (i == 6){rot<-as.data.frame(syn)}
+    if (i == 7){phb<-as.data.frame(syn)}
+}
+
+top50all<-cbind(dar, yon[-c(1:2)], nsi[-c(1:2)], rot[-c(1:2)], phb[-c(1:2)], kai[-c(1:2)], mai[-c(1:2)]) #combine by row not column
+top50all$rowsums<-rowSums(top50all[,3:ncol(top50all)])
+top50all$geneclus<- with(top50all, paste(gene, sep=" ", cluster)) #make new geneclus variable for naming rows
+
+top50genes<-as.data.frame(top50all)[,c(2,1)]
+top50_32<-nt.blast.lineage85[grepl(paste(top50genes$gene, collapse = "|"), nt.blast.lineage85$X1),]
+colnames(top50_32)[1]<-"gene"
+top50genes<-merge(top50genes, top50_32, by="gene", all.x=T)
+top50genes[is.na(top50genes)]<-"unknown"
+
+top50genes$class<-c("Betaproteobacteria", "SAR11", "unknown", "virus", "unknown", "unknown", "Gammaproteobacteria", "unknown", "SAR11", "Synechococcus", "unknown", "Synechococcus", "Prochlorococcus", "Alphaproteobacteria", "Gammaproteobacteria", "Betaproteobacteria", "Betaproteobacteria", "Synechococcus", "uncultured", "Actinobacteria", "Prochlorococcus", "unknown", "Pelagophyceae", "Synechococcus", "unknown", "unknown", "Eukaryote", "uncultured", "SAR11", "unknown", "Synechococcus", "Saccharomycetes", "unknown", "uncultured", "unknown", "Synechococcus", "unknown", "unknown", "Synechococcus", "Eukaryote", "unknown", "unknown", "uncultured", "Eukaryote", "Eukaryote", "unknown", "unknown", "Eukaryote", "SAR11", "unknown")
+
+class<-unique(top50genes$class)
+col<-sort(rainbow(13, alpha = 0.5))
+classcol<-as.data.frame(cbind(class, col))
+top50genes<-merge(top50genes, classcol, by="class", all=T)
+top50<-merge(top50all, top50genes, by="gene")
+
+attributes(top50)$row.names<-as.character(top50$geneclus) #change rownames to geneclus
+top50<-top50[order(top50$class, -top50$rowsums, decreasing = FALSE),]
+
+setwd("~/Dropbox/SBPs/Data/top50_alltaxa/")
+pdf("top50allplot.pdf", width=20, height=20)
+heatmap.2(log(as.matrix(top50[,c(3:7, 17:26, 45:55, 68:78, 93:101, 114:118, 125:135)])+5), trace="none", col=c("white", rev(oceColorsTemperature(255))), Rowv=F, Colv = F, dendrogram = "none", cexCol = 1, srtCol=45, margins=c(8,18), cexRow = 1, RowSideColors = as.character(top50$col))
+legend('left', title="Taxonomy", legend=sort(classcol$class), fill=(as.character(unique(top50$col))), cex=1.5)
+dev.off()
+
+metadata <- read.csv("~/Dropbox/SBPs/Data/nrs500/meta.txt", h=T, sep='\t') #import metadata
+merge50<-merge(metadata[,c(1:4, 7:8, 10:20, 25)], t(top50), by.x="site", by.y=0) #merge zn genes with metadata
+
+cols = c(19:ncol(merge50)) 
+    merge50[,cols] %<>% lapply(function(x) as.numeric(as.character(x))) #change columns to numeric so the function works
+    model50<-cor(merge50[,2:ncol(merge50)], use="pairwise.complete.obs") #make the correlation model
+
+    setwd("~/Dropbox/SBPs/Data/top50_alltaxa/")
+      pdf("top50corr.pdf", width = 20, height = 32)
+      corrplot(model50[c(18:ncol(model50)), c(2, 4:15, 17)], method="color", tl.col = "black", tl.cex = 2.5, type="full", tl.srt=45, number.cex=0, cl.cex=1.5) #corrplot
+      dev.off()
+```
+

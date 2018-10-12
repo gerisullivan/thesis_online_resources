@@ -1,0 +1,218 @@
+---
+title: "After E-values - abundance etc"
+output:
+  html_notebook: default
+  word_document: default
+---
+
+#filtering
+```{r}
+#format no line breaks
+for i in *filtered25.fasta; do name=$(basename $i .filtered25.fasta); echo "fasta_formatter -w 0 -i $name.filtered25.fasta -o $name.filtered25.w"; done > do-format.sh
+
+#cut sequences less than 80 amino acids in length
+for i in *filtered25.w; do name=$(basename $i .filtered25.w); echo "awk 'BEGIN {RS = ">" ; ORS = ""} length(\$2) > 80 {print ">"\$0}' $name.filtered25.w > $name.filtered25.80"; done > do-80e25.sh
+
+#3 clusters affected: sug3, nd, tol.
+#there are fasta.w and fasta files for ONLY >80 for all clusters on sheldon. (removed original .fasta and replaced with fasta_formatter -w 60 for the 3 affected clusters)
+```
+
+#mafft alignments (must be done in moss)
+```{r}
+#folder: /home/db/sbps/e25
+
+for i in *.genes.mafftw.fasta; do name=$(basename $i .genes.mafftw.fasta); echo "mv $name.genes.mafftw.fasta $name.635.fasta"; done > do.rename.sh
+
+#combine with 635 original tree sequences
+nano do-cat.sh
+for i in *.635.fasta; do name=$(basename $i .635.fasta); echo "cat $name.* > combined/$name.fasta"; done > do-cat.sh
+
+#mafft (/home/db/sbps/e25/combined)
+for i in *.fasta; do name=$(basename $i .fasta); echo "/usr/bin/mafft --thread 12 --globalpair --maxiterate 16 --reorder $name.fasta > $name.mafft"; done > do-mafft.sh
+```
+
+##fasttree
+```{r}
+for i in *filtered25.fasta; do name=$(basename $i .filtered25.fasta); echo "fasttree -quote -wag p.500.635.mafft > $name.tree"
+```
+
+
+#taxonomy
+**Diamond**
+```{r, eval=FALSE}
+#on moss
+for i in *.500.fasta; do name=$(basename $i .500.fasta); echo "diamond blastp -q $name.500.fasta -d /home/db/blastdb/nr_oct2017b.dmd -f 102 -o taxa/$name.d.vnr.out --taxonnodes /usr/local/bioinf/diamond/nodes.dmp --taxonmap /usr/local/bioinf/diamond/prot.accession2taxid.gz"; done > do-blastp.sh
+
+#produces 3 columns: queryID, NCBI taxonomy ID (0 if unclassified), E-value of the best alignment with a known taxonomic ID found for the query (0 if unclassified)
+#extract 2nd column of vnr files
+for i in *.out; do name=$(basename $i .d.vnr.out); echo "cut -f 2 $name.d.vnr.out > $name.taxonid"; done > do-cuttax.sh
+
+#in moss folder where you have input and want the output to go:
+nano R.taxonomy #then copy and past from start to finish
+
+##### start of R script to get taxa from taxon IDs #####
+
+files <- c("aa.taxonid", "braa.taxonid", "fe.taxonid", "glbt.taxonid", "glu.taxonid", "glu2.taxonid", "glu3.taxonid", "heme.taxonid", "malt.taxonid", "met.taxonid", "metal.taxonid", "mo.taxonid", "mono.taxonid", "nd.taxonid", "nd2.taxonid", "nd3.taxonid", "nd4.taxonid", "oligo.taxonid", "p.taxonid", "ph.taxonid", "rib.taxonid", "sp.taxonid", "sug.taxonid", "sug2.taxonid", "sug3.taxonid", "sug4.taxonid", "sug5.taxonid", "sulf.taxonid", "tol.taxonid", "urea.taxonid", "zn.taxonid")
+
+out<-c("aa.taxa", "braa.taxa", "fe.taxa", "glbt.taxa", "glu.taxa", "glu2.taxa", "glu3.taxa", "heme.taxa", "malt.taxa", "met.taxa", "metal.500.i", "mo.taxa", "mono.taxa", "nd.taxa", "nd2.taxa", "nd3.taxa", "nd4.taxa", "oligo.500.", "p.taxa", "ph.taxa", "rib.taxa", "sp.taxa", "sug.taxa", "sug2.taxa", "sug3.taxa", "sug4.taxa", "sug5.taxa", "sulf.taxa", "tol.taxa", "urea.taxa", "zn.taxa")
+
+install.packages("taxonomizr", repos='http://cran.us.r-project.org')
+library(taxonomizr)
+getNamesAndNodes()
+nodes<-read.nodes("nodes.dmp") 
+names<-read.names("names.dmp") #will write these files into whatever directory you currently have set
+#to check directory:
+getwd()
+for (i in 1:length(files)){
+ch<-scan(files[i])
+tax<-getTaxonomy(as.vector(ch), nodes, names, desiredTaxa = c("superkingdom", "phylum", "class", "order", "family", "genus", "species"))
+write.table(tax, file=out[i], sep='\t', quote=F, row.names=F, col.names=F) #can change separator to ; or space (\s) or whatever you wish
+}
+
+##### end #####
+
+#to run R script
+Rscript R.taxonomy
+```
+
+```{r}
+head(tax)
+```
+
+
+#krona
+```{r}
+perl /usr/local/bioinf/git/krona-git/KronaTools/scripts/ImportText.pl -q -o sbps.500.html <(sort aa.taxa | sed 's/NA/undef/g'),aa <(sort braa.taxa | sed 's/NA/undef/g'),braa <(sort fe.taxa | sed 's/NA/undef/g'),fe <(sort glbt.taxa | sed 's/NA/undef/g'),glbt <(sort glu2.taxa | sed 's/NA/undef/g'),glu2 <(sort glu3.taxa | sed 's/NA/undef/g'),glu3 <(sort glu.taxa | sed 's/NA/undef/g'),glu <(sort heme.taxa | sed 's/NA/undef/g'),heme <(sort malt.taxa | sed 's/NA/undef/g'),malt <(sort metal.taxa | sed 's/NA/undef/g'),metal <(sort met.taxa | sed 's/NA/undef/g'),met <(sort mono.taxa | sed 's/NA/undef/g'),mono <(sort mo.taxa | sed 's/NA/undef/g'),mo <(sort nd2.taxa | sed 's/NA/undef/g'),nd2 <(sort nd3.taxa | sed 's/NA/undef/g'),nd3 <(sort nd4.taxa | sed 's/NA/undef/g'),nd4 <(sort nd.taxa | sed 's/NA/undef/g'),nd <(sort oligo.taxa | sed 's/NA/undef/g'),oligo <(sort ph.taxa | sed 's/NA/undef/g'),ph <(sort p.taxa | sed 's/NA/undef/g'),p <(sort rib.taxa | sed 's/NA/undef/g'),rib <(sort sp.taxa | sed 's/NA/undef/g'),sp <(sort sug2.taxa | sed 's/NA/undef/g'),sug2 <(sort sug3.taxa | sed 's/NA/undef/g'),sug3 <(sort sug4.taxa | sed 's/NA/undef/g'),sug4 <(sort sug5.taxa | sed 's/NA/undef/g'),sug5 <(sort sug.taxa | sed 's/NA/undef/g'),sug <(sort sulf.taxa | sed 's/NA/undef/g'),sulf <(sort tol.taxa | sed 's/NA/undef/g'),tol <(sort urea.taxa | sed 's/NA/undef/g'),urea <(sort zn.taxa | sed 's/NA/undef/g'),zn
+```
+
+#basta
+```{r}
+#Basta was run with default parameters
+/usr/local/bioinf/BASTA/bin/basta sequence -t majority -b BEST_HIT  56000.vnr.full.out 56000.vnr.full.out.basta prot
+#To produce 2 taxonomic lists, top hit and LCA majority
+
+56000.vnr.full.out.basta
+
+#Krona plot for this data
+cat *basta | cut -f 2 | sort > krona.input
+perl /usr/local/bioinf/git/krona-git/KronaTools/scripts/ImportText.pl -o SBP_summary2.html ~/krona.input
+```
+
+# filtering for unique hits, assuming the top is the best hit
+```{r}
+ for i in *sbps.map.out ; do sort -u -t$'\t' -k1,1 $i > $i.u; done
+```
+
+#unique IDs, joining etc
+```{r}
+#The following commands will return one best hit per filtered metagenome read
+for i in *sbps.map.out; do sort -u -t$'\t' -k1,1 $i > $i.u; done
+
+#Each of the metagenome forward fasta files has included the sample name as the sequence name, for easy parsing. You may need to consider using our R-based value filtering script after concatenating into one file.
+Cat *.u > all.sbps.mm.hits.out.u
+
+#then add a tab separator between the site name and unique seqid
+Sed -I ’s/;/`ctrl``v``tab`/‘ all.sbps.mm.hits.out.u > all.sbps.mm.hits.out.u.tab
+
+#then, if you are happy with values
+Cat all.sbp.mm.hits.out.u.tab | cut -f 1,3 > sbps.u.temp.2c
+
+# this 2column data can be transformed into the first part of our abundance table using a custom python script
+python 2c2tab.py > sbps.mm.temp.table
+
+#need to remove the space added by the python script's print function (unsure how to remove within the script at this stage)
+sed 's/ //' sbps.mm.temp.table > sbps.mm.temp.table.fix
+
+#cluster names
+ID files were extracted for the clusters and the cluster was put at the front of the file followed by a tab and the MM ID in BBEdit.
+```
+
+#attempting join with awk
+```{r}
+#files in /home/geraldine/hmms3/output/mm/jointest/ folder
+awk 'FNR==NR{f1[$1]=$0;next}$2 in f1{print f1[$2],$1}' OFS="\t" sbp.abund.header cluster.gene.names > success1
+###^^ winning code, joins files
+#will need to update when all the files have been made - this is only the workflow so far and will need to be applied to the finished abundance data
+
+#unique MM IDs in the cluster.gene.names file? - 285675
+sort -u -k2,2 cluster.gene.names | wc -l
+
+#unique MM IDs in the cluster.gene.names file? - 55029
+sort -u -k1,1 sbp.abund.header | wc -l
+
+#there are overlaps in the cluster.gene.names file as some entries have been found by multiple HMMs
+
+#adding the header to the data for context and analysis
+cat header1 success1 > successheader1
+```
+
+
+
+
+## abundance MM table
+```{r}
+View(files)
+for i in *tblout; do name=$(basename $i .tblout); echo "sed '/^#/ d' $name.tblout | cut -f 1 -d ' ' > $name.id"; done > do-abunMM.sh
+```
+
+#test abundance MM102046805 - very abundant phosphate gene
+```{r}
+#latitudes and longitudes for all sampling sites (still incomplete, will deal with that later)
+#generate abundance data for each cluster
+for i in *.e.25.filtered; do name=$(basename $i .e.25.filtered); echo "grep -w -F -f $name.e.25.filtered /home/geraldine/hmms3/output/mm/freads/sbps.mm.20180530.table.fix > $name.id.25.abund"; done > do-abundMM
+
+#export into excel and look at the pretty colours
+##met cluster - not in top 10 but some have their total abundance only at DAR - interesting
+##mono cluster - 2nd most abundant has very high number of reads at most d500 sites
+
+#copy and paste top 10 IDs and extract their fasta sequences
+nano aa.top10.id
+for i in *.top10.id; do name=$(basename $i .top10.id); echo "perl -ne 'if(/^>(\S+)/){\$c=\$i{\$1}}\$c?print:chomp;\$i{\$_}=1 if @ARGV' $name.top10.id /home/geraldine/hmms3/output/mm/$name.id.mm.fasta > $name.top10.fasta"; done > do-fasta.sh
+
+```
+
+```{r}
+library(readr)
+p <- read_delim("~/Dropbox/SBPs/Data/Site abundance MM/p.txt", 
+    "\t", escape_double = FALSE, col_types = cols(Proportion = col_number()), 
+    trim_ws = TRUE)
+
+library(ggplot2)
+ggplot(p, aes(factor(p$Site), p$Proportion, fill = Gene, x=Site, y=Proportion)) + 
+  geom_bar(stat="identity", position = "dodge", colour="black")
+```
+
+
+```{r}
+library(readr)
+aa <- read_delim("~/Dropbox/SBPs/Data/Site abundance MM/aa.av.txt", 
+    "\t", escape_double = FALSE, col_types = cols(Proportion = col_number()), 
+    trim_ws = TRUE)
+
+library(ggplot2)
+ggplot(aa, aes(factor(aa$Site), aa$Average, fill = Gene, x=Site, y=Average)) + 
+  geom_bar(stat="identity", position = "dodge", colour="black") +
+  theme(axis.text.x = element_text(size=13))
+```
+```{r}
+ggplot(aa, aes(factor(aa$Site), aa$Average, fill = Site, x=Site, y=Average)) + 
+  geom_bar(stat="identity", position = "dodge", colour="black") +
+  labs(title="Average Abundance of Top 10 Genes at Each MM Site", subtitle="Cluster aa") +
+  theme(axis.title=element_text(size=20), title=element_text(size=20), axis.text=element_text(size=13), axis.text.x=element_text(angle=90, size=0)) +
+  theme(plot.title = element_text(hjust = 0.5)) +
+  facet_grid(~p$Gene) +
+  scale_x_discrete(expand = c(0, 0)) + scale_y_continuous(expand = c(0, 0))
+```
+
+```{r}
+sitecols<-c("#e6194b", "#3cb44b", "#ffe119", "#0082c8", "#f58231", "#911eb4", "#46f0f0", "#f032e6", "#d2f53c", "#fabebe", "#008080", "red")
+
+ggplot(aa, aes(y=Average, x=as.factor(Gene))) + geom_bar(aes(fill=as.factor(Site)), stat="identity", position="fill", alpha=0.5, width=0.7) + theme_few() + theme(text=element_text(family="sans", face="plain", color="#000000", size=15, hjust=0.5, vjust=0.5), plot.title = element_text(hjust = 0.5, size=30), plot.subtitle = element_text(hjust = 0.5)) + guides(fill=guide_legend(title="Site")) + xlab("Gene") + ylab("Proportion") + scale_fill_manual(values=sitecols) + theme(axis.text.x = element_text(, size=0, angle=90)) + labs(title="Relative Abundance of 10 Genes", subtitle="Cluster aa")
+```
+
+
+
+
+
+
+

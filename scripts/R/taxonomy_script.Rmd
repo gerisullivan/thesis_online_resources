@@ -1,0 +1,42 @@
+---
+title: "Taxonomy - blastn"
+output: html_notebook
+---
+
+###This notebook describes the method for obtaining the taxonomic lineage of a nucleotide sequence in bash.
+
+#####The Cyanorak database follows the same process but is not publically available for download.
+
+**download nt database**
+```{bash}
+wget ftp://ftp.ncbi.nlm.nih.gov/blast/db/FASTA/nt.gz
+
+#makeblastdb - must be in desired folder with nt file
+makeblastdb -in nt -dbtype nucl -parse_seqids -taxid_map /disks/jen/scratch-ssd/db/gi_taxid_nucl.dmp
+```
+
+This produces a list of taxonomic lineages at the end
+```{bash}
+#get nt sequence for all entries first
+perl -ne 'if(/^>(\S+)/){$c=$i{$1}}$c?print:chomp;$i{$_}=1 if @ARGV' list /disks/jen/scratch-ssd/db/AMD.2017b.all.150.rename.95_sorted.nt > list.nt
+
+#search sequences
+#for multiple files
+blastn -db /disks/jen/scratch-ssd/db/nt -outfmt='6 qseqid sseqid pident length mismatch gapopen qlen qstart qend sstart send evalue bitscore' -max_target_seqs 1 -best_hit_overhang 0.1 -ungapped -dust no -num_threads=12 -query genes.nt -out genes.vnt.out
+
+#one hit per gene if the command for one target sequence didn't work
+sort -u -t$'\t' -k1,1 genes.vnt.out > genes.vnt.out.u
+
+#get accession numbers
+cut -f 2 genes.vnt.out.u > genes.acc
+
+#convert from accession numbers to taxid
+join -1 1 -2 2 <(sort -k 1,1 genes.acc) <(sort -k 2,1 nucl_gb.accession2taxid) |  > genes.acc2taxid
+
+#get only the taxid
+cut -d ' ' -f 3 genes.acc2taxid | sed 's/ /[ctrl-V tab]/' > genes.taxid
+
+#combine the taxid with the lineage file
+#use uniq command to remove duplicate lineages.
+join -1 1 -2 1 <(sort -k 1,1 genes.taxid) <(sort -k 1,1 taxid2lineages_2017.tab) | genes.tax 
+```
