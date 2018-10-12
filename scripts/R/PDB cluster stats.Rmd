@@ -1,0 +1,32 @@
+---
+title: "PDB Clusters"
+output: html_notebook
+---
+
+**File found on dropbox under PDB_clusters.txt**
+```{r}
+library(readr)
+PDB_clusters <- read_delim("~/Dropbox/SBPs/PDB_clusters.txt", "\t", escape_double = FALSE, col_names = FALSE, col_types = cols(X2 = col_number()), trim_ws = TRUE)
+attach(PDB_clusters)
+headers2<-c("code", "length", "cluster")
+colnames(PDB_clusters)<-headers2
+```
+
+```{r}
+boxplot(length~cluster, data=PDB_clusters, col=c(2:9), main="Boxplot of PDB Clusters A-G", xlab="Cluster", ylab="", cex.lab=1.5, yaxt="n", cex.main=2, res=300)
+title(ylab="Length", cex.lab=1.5, line=2.6)
+axis(2, cex.lab=1.5, las=1)
+```
+
+```{r}
+table(cluster)
+```
+```{r}
+bitmap("Plot7.tiff", height = 4, width = 4, units = 'in', type="tifflzw", res=300)
+boxplot(length~cluster, data=PDB_clusters, col=c(2:9), main="Boxplot of PDB Clusters A-G", xlab="Cluster", ylab="", cex.lab=2, yaxt="n", cex.main=2)
+title(ylab="Length", cex.lab=2, line=2.4)
+axis(2, cex.lab=2, las=1)
+dev.off()
+par(mfrow = c(1,1))
+```
+

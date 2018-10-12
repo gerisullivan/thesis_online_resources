@@ -1,0 +1,69 @@
+---
+title: "DON"
+output: html_notebook
+---
+
+```{r}
+library(maps)
+```
+
+
+**Import**
+```{r}
+library(readxl)
+DON100 <- read_excel("~/Dropbox/SBPs/Data/DON coordinates.xlsx", 
+    sheet = "<100m", col_types = c("text", 
+        "numeric", "numeric", "numeric"))
+```
+
+**Map**
+```{r}
+sizes<-c(2, 4, 6, 8, 10)
+sizes2<-sizes/2
+
+map(database='world', fill=T, col=c("white"), resolution=300, bg=c("lightblue"))
+box()
+mtext(expression(paste("DON Concentration to 100m (", mu, "m)")), 3, cex=2)
+points(DON100$Lon, DON100$Lat, cex=DON100$'[DON]'/2, col=alpha("red", 0.7), pch=16)
+legend("topright", legend=c("2", "4", "6", "8", "10"), pch=16, pt.cex=sizes2, col=alpha("red", 0.7))
+
+#export it as a PDF to retain quality
+```
+
+**Surface Measurements**
+```{r}
+library(readxl)
+DONsurface <- read_excel("~/Dropbox/SBPs/Data/DON coordinates.xlsx", 
+    sheet = "Surface", col_types = c("text", 
+        "numeric", "numeric", "numeric", 
+        "numeric"))
+View(DONsurface)
+```
+
+```{r}
+map(database='world', fill=T, col=c("white"), resolution=300, bg=c("lightblue"))
+box()
+mtext(expression(paste("DON Concentration at the Surface (", mu, "m)")), 3, cex=2)
+points(DONsurface$Lon, DONsurface$Lat, cex=DONsurface$'[DON]'/2, col=alpha("red", 0.7), pch=16)
+legend("topright", legend=c("2", "4", "6", "8", "10"), pch=16, pt.cex=sizes2, col=alpha("red", 0.7))
+```
+```{r}
+library(readxl)
+DONtogether <- read_excel("~/Dropbox/SBPs/Data/DON coordinates.xlsx", 
+    sheet = "together", col_types = c("text", 
+        "numeric", "numeric", "numeric", 
+        "text"))
+```
+
+```{r}
+depthcol<-ifelse(grepl("surface", DONtogether$depth, ignore.case = T), "orange", "red")
+circlecol<-c("orange", "red")
+png("~/Dropbox/SBPs/Writing/Figures/DONconc.png", res = 300, width = 2000, height = 1500)
+map(database='world', fill=T, col=c("white"), resolution=300, bg=c("lightblue"))
+box()
+mtext(expression(paste("DON Concentration to 100m (", mu, "m)")), 3, cex=2)
+points(DONtogether$Lon, DONtogether$Lat, cex=DONtogether$'[DON]'/2, col=alpha(depthcol, 0.7), pch=16)
+legend(title = expression(paste(mu, "m)")),"topright", legend=c("2", "4", "6", "8", "10"), pch=16, pt.cex=sizes2, col=alpha("darkgrey", 0.7))
+legend("bottomright", legend=c("surface", "sub-surface"), pch=16, pt.cex=2, col=alpha(circlecol, 0.7))
+dev.off()
+```

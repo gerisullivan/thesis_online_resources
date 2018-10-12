@@ -1,0 +1,103 @@
+---
+title: "Stations Map"
+output: html_notebook
+---
+```{r}
+install.packages("readxl")
+library(readxl)
+install.packages("maps")
+library(maps)
+install.packages("scales")
+library(scales)
+```
+
+```{r}
+stations <- read_excel("~/Dropbox/SBPs/OM.CompanionTables.xlsx", sheet = "Sheet2", col_types = c("numeric", "numeric", "text"))
+attach(stations)
+stations$mapcol<-ifelse(grepl("Tara", stations$Station, ignore.case = T), "Darkorchid", ifelse(grepl("Indigo", stations$Station, ignore.case = T), "Blue", "Red"))
+```
+
+**Final Map - uses a subset of the MM stations (not the big line sample down the date line)**
+```{r, fig.width=10,par(mfrow=c(1,2))}
+setwd("~/Dropbox/SBPs/Data")
+pdf("stationsposter.pdf", width=20, height=13)
+stations<-stations[-c(142), ]
+maps::map(database='world', fill=T, col=alpha('palegreen3', 0.3), resolution=600)
+box()
+mtext("Metagenome Stations", 3, cex=6, line=1)
+points(stations$`Longitude [degrees East]`, stations$`Latitude [degrees North]`, col=stations$mapcol, pch=16, main="Stations", cex=2.5)
+legend("topright", legend=c("Indigo", "IMOS", "Tara Oceans"), pch=16, col=c("Blue", "Red", "Darkorchid"), title="Station", cex=3, bg = "white")
+axis(1, labels = F, xaxt="n")
+axis(2, labels = F, yaxt="n")
+dev.off()
+```
+
+```{r}
+map
+```
+
+
+
+#TARA map
+```{r}
+par(oma=c(0,1,0,0))
+tara<-stations[c(1:132),]
+map(database='world', fill=T, col=alpha('palegreen3', 0.3), resolution=300)
+box()
+mtext("Tara Oceans - Stations", 3, cex=2)
+mtext("Latitude", 2, line=2)
+mtext("Longitude", 1, line=2)
+points(tara$`Longitude [degrees East]`, tara$`Latitude [degrees North]`, col=tara$mapcol, pch=16, main="Stations")
+axis(1, labels = T)
+axis(2, labels = T)
+#export it as a PDF to retain quality
+```
+
+#Other map
+```{r}
+other<-stations[-c(1:132), ]
+par(oma=c(0,1,0,0))
+map(database='world', fill=T, col=alpha('palegreen3', 0.3), resolution=300, xlim=c(25,180), ylim=c(-50, 40),)
+box()
+mtext("Metagenome Stations", 3, cex=2, ylab="Latitude", xlab="Longitude")
+points(other$`Longitude [degrees East]`, other$`Latitude [degrees North]`, col=other$mapcol, pch=16, main="Stations")
+legend("topright", legend=c("Indigo", "Marine Microbes"), pch=16, col=c("Blue", "Red"), title="Station")
+mtext("Latitude", 2, line=2)
+mtext("Longitude", 1, line=2)
+axis(1, labels = T)
+axis(2, labels = T)
+#export it as a PDF to retain quality
+```
+
+```{r}
+library(readr)
+library(maps)
+nrs <- read_delim("~/Dropbox/SBPs/Data/NRSlatlong.txt", "\t", escape_double = FALSE, col_types = cols(Lat = col_number(), Long = col_number()), trim_ws = TRUE)
+par(oma=c(0,1,0,0))
+setwd("~/Dropbox/SBPs/Data")
+pdf("IMOSmap.pdf", width=11, height = 10)
+maps::map(database='world', fill=T, col=alpha('burlywood3', 0.3), resolution=300, xlim=c(110,157), ylim=c(-45, -10),)
+box()
+mtext("IMOS National Reference Stations", 3, cex=4, line=1)
+points(nrs$Long, nrs$Lat, col=c("black"), pch=21, bg=nrs$Col, cex=9, main="Stations")
+text(nrs$Long, nrs$Lat, labels = nrs$Site, cex=1.8)
+axis(1, labels = F, xaxt="n")
+axis(2, labels = F, yaxt="n")
+dev.off()
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,72 @@
+---
+title: "HMM shells"
+output: html_notebook
+---
+**For building the hmms**
+```{r}
+#!/bin/bash
+#PBS -N hmms
+#PBS -S /bin/bash
+#PBS -t 1-32
+#PBS -l nodes=1
+#PBS -l walltime=2:00:00
+#PBS -m e
+#PBS -d /home/geraldine/mafftw
+#PBS -e /home/geraldine/errors/${PBS_JOBID}.err
+#PBS -o /home/geraldine/errors/${PBS_JOBID}.out
+
+
+cd ${PBS_O_WORKDIR}
+echo "Job ID is ${PBS_JOBID}"
+echo "Job Array ID is ${PBS_ARRAYID}"
+echo "Timestamp is $(date +%F_%T)"
+echo "Directory is $(pwd)"
+echo "Running on host $(hostname)"
+echo "Working directory is ${PBS_O_WORKDIR}"
+echo "Job has the following nodes/cores:"
+cat ${PBS_NODEFILE}
+
+PARAMETERS=$(awk -v line=${PBS_ARRAYID} '{if (NR == line) { print $0; };}' ${PBS_O_WORKDIR}/hmm.b.config)
+
+date +%F_%T
+echo "file working on is $PARAMETERS"
+hmmbuild --amino /home/geraldine/mafftw/hmms/$PARAMETERS.hmm /home/geraldine/mafftw/$PARAMETERS
+
+date +%F_%T
+```
+
+**For searching with the hmms**
+```{r}
+#!/bin/bash
+#PBS -N hmms
+#PBS -S /bin/bash
+#PBS -t 1-32
+#PBS -l nodes=1
+#PBS -l walltime=2:00:00
+#PBS -m e
+#PBS -d /home/geraldine/mafftw
+#PBS -e /home/geraldine/errors/${PBS_JOBID}.err
+#PBS -o /home/geraldine/errors/${PBS_JOBID}.out
+
+
+cd ${PBS_O_WORKDIR}
+echo "Job ID is ${PBS_JOBID}"
+echo "Job Array ID is ${PBS_ARRAYID}"
+echo "Timestamp is $(date +%F_%T)"
+echo "Directory is $(pwd)"
+echo "Running on host $(hostname)"
+echo "Working directory is ${PBS_O_WORKDIR}"
+echo "Job has the following nodes/cores:"
+cat ${PBS_NODEFILE}
+
+PARAMETERS=$(awk -v line=${PBS_ARRAYID} '{if (NR == line) { print $0; };}' ${PBS_O_WORKDIR}/hmm.s.config)
+
+date +%F_%T
+echo "file working on is $PARAMETERS"
+hmmsearch /home/geraldine/mafftw/output/$PARAMETERS.out $PARAMETERS /home/geraldine/"search_file"
+#search_file could be /home/geraldine/Cyano_sar11_pdb.20180423.fasta or
+#/home/geraldine/OM-RGC_seq.release.faa
+
+date +%F_%T
+```
+

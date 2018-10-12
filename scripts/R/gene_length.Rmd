@@ -1,0 +1,67 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+#plot of length of sequences
+```{r}
+input<-read.csv("~/Dropbox/SBPs/Data/gene_clus_length", h=F, sep=' ')
+head(input)
+colnames(input)<-c("gene", "cluster", "length")
+```
+
+```{r}
+
+pdf("~/Dropbox/SBPs/clustergenelength_plot.pdf", width=20, height=10)
+boxplot(input$length~input$cluster, data = input)
+dev.off()
+```
+```{r}
+input2<-read.csv("~/Dropbox/SBPs/Data/genes_clus_length_rowsums", h=F, sep=' ')
+head(input2)
+colnames(input2)<-c("gene", "cluster", "length", "rowsums")
+```
+
+#subset rowsums > 0
+```{r}
+subinput2<-subset(input2, input2$rowsums > 0)
+```
+
+
+```{r}
+rbPal <- colorRampPalette(c('red','blue'))
+subinput2$Col <- rbPal(100)[as.numeric(cut(subinput2$rowsums, breaks = 10))]
+
+boxplot(subinput2$length~subinput2$cluster, data = subinput2, col = subinput2$Col)
+```
+#ggplot
+```{r}
+ggplot(subinput2, aes(subinput2$cluster, subinput2$length)) + 
+  geom_point() +
+  geom_jitter(aes(colour = log(subinput2$rowsums))) + scale_colour_gradientn(colours = terrain.colors(20)) + ylim(0,1500)
+```
+
+#normalised abundances
+```{r}
+norm<-read.csv("~/Dropbox/SBPs/Data/gene_clus_length_normabund", h=F, sep=' ')
+colnames(norm)<-c("gene", "cluster", "length", "norm_abund")
+head(norm)
+```
+
+```{r}
+subnorm<-subset(norm, norm$norm_abund > 0)
+
+rbPal <- colorRampPalette(c('red','blue'))
+subnorm$Col <- rbPal(100)[as.numeric(cut(subnorm$norm_abund, breaks = 10))]
+```
+
+```{r}
+pdf("~/Dropbox/SBPs/Data/clus_length_normabund.pdf", width=20, height=10)
+ggplot(subnorm, aes(subnorm$cluster, subnorm$length)) + 
+  geom_point() +
+  geom_jitter(aes(colour = log(subnorm$norm_abund)+17)) + scale_colour_gradientn(colours = terrain.colors(30), name = "LogAbund") +
+labs(x = "Cluster", y = "Gene Length")
+dev.off()
+```
+
+

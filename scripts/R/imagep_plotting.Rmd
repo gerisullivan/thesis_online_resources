@@ -1,0 +1,73 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+###Phosphate###
+source of data [NOAA](https://www.nodc.noaa.gov/OC5/SELECT/woaselect/woaselect.html)
+```{r}
+library(readr)
+phosphate <- read_csv("~/Dropbox/SBPs/Data/phosphate.csv",
+    col_types = cols(`0` = col_number(), 
+        LATITUDE = col_number(), LONGITUDE = col_number()))
+```
+
+```{r}
+library(reshape2)
+surf_P<-acast(phosphate, LONGITUDE~LATITUDE, value.var="0")
+```
+
+```{r}
+library(oce)
+
+#[is.na(surf_P)]<-0
+
+latP<-as.numeric(colnames(surf_P))
+lonP<-as.numeric(row.names(surf_P))
+
+imagep(lonP, latP, as.matrix(surf_P), col=oce.colorsJet(100), main=expression(paste("Annual Phosphate Concentration at the Surface (", mu, "mol/L)")), xlab="Longitude", ylab="Latitude")
+```
+
+###Nitrate###
+```{r}
+library(readr)
+nitrate <- read_csv("~/Dropbox/SBPs/Data/nitrate.csv", 
+    col_types = cols(`0` = col_number(), 
+        LATITUDE = col_number(), LONGITUDE = col_number()))
+```
+
+```{r}
+library(reshape2)
+surf_N<-acast(nitrate, LONGITUDE~LATITUDE, value.var="0")
+```
+
+```{r}
+latN<-as.numeric(colnames(surf_N))
+lonN<-as.numeric(row.names(surf_N))
+
+install.packages("oce")
+library(oce)
+is.na(surf_N)<-0
+imagep(lonN, latN, as.matrix(surf_N), col=oceColorsJet(100), main=expression(paste("Annual Nitrate Concentration at the Surface (", mu, "mol/L)")), xlab="Longitude", ylab="Latitude")
+```
+
+```{r}
+library(readr)
+silicate <- read_csv("~/Dropbox/SBPs/Data/silicate.csv", 
+    col_types = cols(`0` = col_number(), 
+        LATITUDE = col_number(), LONGITUDE = col_number()))
+View(silicate)
+```
+
+```{r}
+surf_S<-acast(silicate, LONGITUDE~LATITUDE, value.var="0")
+```
+
+```{r}
+latS<-as.numeric(colnames(surf_S))
+lonS<-as.numeric(row.names(surf_S))
+
+library(oce)
+is.na(surf_S)<-0
+imagep(lonS, latS, as.matrix(surf_S), col=oceColorsJet(100), main=expression(paste("Annual Silicate Concentration at the Surface (", mu, "mol/l)")), xlab="Longitude", ylab="Latitude")
+```
+

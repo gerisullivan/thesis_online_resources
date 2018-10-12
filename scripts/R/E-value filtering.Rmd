@@ -1,0 +1,62 @@
+---
+title: "E-value filtering"
+output: html_notebook
+editor_options: 
+  chunk_output_type: inline
+---
+#Analysing e-value drop-offs for the clusters
+Redundant after other steps
+```{r}
+#in sheldon
+#make evalue files for all tblout.tab files. Will have ID and E-values only, separated by a tab.
+for i in *tblout; do name=$(basename $i .tblout); echo "sed -e '/^#/ d; s/.*mafftw - /     /; s/ .*//' $name.tblout > $name.evalues"; done > do-cut.sh
+
+for i in *.genes.mafftw.fasta.hmm.671.tblout; do name=$(basename $i .genes.mafftw.fasta.hmm.671.tblout); echo "sed -e '/^#/ d; s/ - .*mafftw - /     /; s/ .*//' $name.genes.mafftw.fasta.hmm.671.tblout > $name.671.evalues"; done > do-cut.sh
+```
+
+Cut out only name (2nd column) and E-value (third column).
+```{r}
+cat  *.evalues | cut -f 3,5 > hmms.selfcheck.evalue
+```
+
+```{r, fig.width=6}
+library(readr)
+evalues <- read_delim("~/Dropbox/SBPs/hmms.selfcheck.evalue", 
+    "\t", escape_double = FALSE, col_names = FALSE, 
+    trim_ws = TRUE)
+
+genes<-(unique(evalues$X1))
+671-36
+
+plot(seq(1,nrow(evalues[evalues$X1==genes[i],]),1)/nrow(evalues[evalues$X1==genes[i],]),sort(evalues[evalues$X1==genes[i],2]),type="l", log="y")
+for (i in 2:length(genes)){
+lines(seq(1,nrow(evalues[evalues$X1==genes[i],]),1)/nrow(evalues[evalues$X1==genes[i],]),sort(evalues[evalues$X1==genes[i],2]), col=i)
+}
+```
+
+
+#Filtering output (TARA + MM) on the basis of E-value. Importing and exporting multiple files.
+
+```{r include=TRUE}
+setwd("/home/geraldine/hmms3/output/mm/")
+
+files <- list.files(pattern="*.tblout", full.names=F, recursive=FALSE)
+
+#cutoffs<-c("1e-40", "1e-98", "1e-75", "1e-59", "1e-51", "1e-117", "1e-178", "1e-63", "1e-80", "1e-90", "1e-61", "1e-55", "1e-75", "1e-43", "1e-85", "1e-70", "1e-28", "1e-111", "1e-26", "1e-63", "1e-73", "1e-91", "1e-83", "1e-84", "1e-84", "1e-83", "1e-96", "1e-67", "1e-107", "1e-86", "1e-76")
+#length(cutoffs)
+
+#savenames
+#savenames<-c("aa.e.filtered", "braa.e.filtered", "fe.e.filtered", "glbt.e.filtered", "glu.e.filtered", "glu2.e.filtered", "glu3.e.filtered", "heme.e.filtered", "malt.e.filtered", "met.e.filtered", "metal.e.filtered", "mo.e.filtered", "mono.e.filtered", "nd.e.filtered", "nd2.e.filtered", "nd3.e.filtered", "nd4.e.filtered", "oligo.e.filtered", "p.e.filtered", "ph.e.filtered", "rib.e.filtered", "sp.e.filtered", "sug.e.filtered", "sug2.e.filtered", "sug3.e.filtered", "sug4.e.filtered", "sug5.e.filtered", "sulf.e.filtered", "tol.e.filtered", "urea.e.filtered", "zn.e.filtered")
+#length(savenames)
+
+#savenames for all cutoffs=25
+savenames<-c("aa.e.25.filtered", "braa.e.25.filtered", "fe.e.25.filtered", "glbt.e.25.filtered", "glu2.e.25.filtered", "glu3.e.25.filtered", "glu.e.25.filtered", "heme.e.25.filtered", "malt.e.25.filtered", "metal.e.25.filtered", "met.e.25.filtered", "mo.e.25.filtered", "mono.e.25.filtered", "nd2.e.25.filtered", "nd3.e.25.filtered", "nd4.e.25.filtered", "nd.e.25.filtered", "oligo.e.25.filtered", "p.e.25.filtered", "ph.e.25.filtered", "rib.e.25.filtered", "sp.e.25.filtered", "sug2.e.25.filtered", "sug3.e.25.filtered", "sug4.e.25.filtered", "sug5.e.25.filtered", "sug.e.25.filtered", "sulf.e.25.filtered", "tol.e.25.filtered", "urea.e.25.filtered", "zn.e.25.filtered")
+
+library(readr)
+for (i in 1:length(files)){
+infile <- read_table2(files[i], col_names = FALSE, skip = 3)
+#filtered<-infile[as.numeric(infile$X5)<as.numeric(cutoffs[i]),]
+filtered<-infile[as.numeric(infile$X5)<as.numeric(1e-25),]
+nonas<-filtered[complete.cases(filtered), ]
+write.table(nonas[,1], file=savenames[i], sep='\t', quote=F, row.names=F, col.names=F)}
+```
