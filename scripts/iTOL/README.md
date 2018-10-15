@@ -1,1 +1,1 @@
-#scripts used to make the rings in iTOL visualisations.
+# Scripts used to make the rings in iTOL visualisations.
