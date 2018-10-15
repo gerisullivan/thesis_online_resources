@@ -1,0 +1,749 @@
+DATASET_COLORSTRIP
+#In colored strip datasets  each ID is associated to a color box/strip and can have an optional label. Color can be specified in hexadecimal  RGB or RGBA notation. When using RGB or RGBA notation  you cannot use COMMA as the dataset separator
+
+#lines starting with a hash are comments and ignored during parsing
+
+#=================================================================#
+#                    MANDATORY SETTINGS                           #
+#=================================================================#
+#select the separator which is used to delimit the data below (TAB SPACE or COMMA).This separator must be used throughout this file (except in the SEPARATOR line  which uses space).
+
+SEPARATOR TAB
+#SEPARATOR COMMA
+#SEPARATOR SPACE
+
+#label is used in the legend table (can be changed later)
+DATASET_LABEL	subs
+
+#dataset color (can be changed later)
+COLOR	#ff0000
+
+#=================================================================#
+#                    OPTIONAL SETTINGS                            #
+#=================================================================#
+
+#If COLOR_BRANCHES is set to 1  branches of the tree will be colored according to the colors of the strips above the leaves.
+#When all children of a node have the same color  it will be colored the same  ie. the color will propagate inwards towards the root.
+COLOR_BRANCHES	0
+
+#each dataset can have a legend  which is defined below
+#for each row in the legend  there should be one shape  color and label
+#shape should be a number between 1 and 6:
+#1: square
+#2: circle
+#3: star
+#4: right pointing triangle
+#5: left pointing triangle
+#6: checkmark
+
+LEGEND_TITLE	Substrate group
+LEGEND_SHAPES	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1
+LEGEND_COLORS	#74d44b	#482b77	#cb3d2b	#006cb4	#5a5a5b	#bcacd7	#8243cf	#007a25	#859200	#00a25f	#6babc9	#ab72d1	#1cefc3	#f1d26c	#e4d137	#607cca	#e470de	#3c425d	#bdab22
+LEGEND_LABELS	ATP	branched aa	metal	N	n.d.	neg charged aa	non-polar aa	osmolyte	P	peptide	polar aa	pos charged aa	purine	pyrimidine	S	special aa	sugar	unclassified aa	vitamin
+
+#=================================================================#
+#     all other optional settings can be set or changed later     #
+#           in the web interface (under 'Datasets' tab)           #
+#=================================================================#
+
+#width of the colored strip
+#STRIP_WIDTH 25
+
+#left margin  used to increase/decrease the spacing to the next dataset. Can be negative  causing datasets to overlap.
+#MARGIN 0
+
+#border width; if set above 0  a border of specified width (in pixels) will be drawn around the color strip 
+#BORDER_WIDTH 0
+
+#border color; used when BORDER_WIDTH is above 0
+#BORDER_COLOR #0000ff
+
+#always show internal values; if set  values associated to internal nodes will be displayed even if these nodes are not collapsed. It could cause overlapping in the dataset display.
+SHOW_INTERNAL	0
+
+
+#Internal tree nodes can be specified using IDs directly  or using the 'last common ancestor' method described in iTOL help pages
+
+#=================================================================#
+#       Actual data follows after the "DATA" keyword              #
+#=================================================================#
+DATA
+
+#Examples:
+#assign a red colored strip to leaf 9606  with label 'Human' (label is displayed in the mouseover popups)
+#9606 #ff0000 Human
+
+#assign a green  semi-transparent (alpha 0.5) strip to an internal node  without any label. If 'Show internal values' is set to 'No'  this will only be displayed if the node is collapsed. 
+#9606|5664 rgba(0 255 0 0.5)
+
+1A99	#006cb4	N
+1ABF	#e470de	sugar
+1ATG	#cb3d2b	metal
+1B05	#00a25f	peptide
+1DP4	#00a25f	peptide
+1DPP	#00a25f	peptide
+1DRJ	#e470de	sugar
+1ELJ	#e470de	sugar
+1ESZ	#cb3d2b	metal
+1EU8	#e470de	sugar
+1EWK	#bcacd7	neg charged aa
+1GCG	#e470de	sugar
+1GR2	#bcacd7	neg charged aa
+1HSL	#6babc9	polar aa
+1II5	#bcacd7	neg charged aa
+1IXH	#859200	P
+1J1N	#e470de	sugar
+1JDN	#00a25f	peptide
+1JX6	#5a5a5b	n.d.
+1LAF	#8243cf	non-polar aa
+1MRP	#cb3d2b	metal
+1N2Z	#bdab22	vitamin
+1O7T	#cb3d2b	metal
+1P99	#8243cf	non-polar aa
+1PB8	#bcacd7	neg charged aa
+1PC3	#859200	P
+1POT	#006cb4	N
+1PQ4	#cb3d2b	metal
+1PSZ	#cb3d2b	metal
+1R9L	#607cca	special aa
+1RPJ	#e4d137	S
+1S7Y	#bcacd7	neg charged aa
+1SBP	#e4d137	S
+1SI0	#cb3d2b	metal
+1SW1	#607cca	special aa
+1TJY	#5a5a5b	n.d.
+1TOA	#cb3d2b	metal
+1TWY	#859200	P
+1UIV	#cb3d2b	metal
+1UQW	#e4d137	S
+1URG	#e470de	sugar
+1US4	#bcacd7	neg charged aa
+1USK	#8243cf	non-polar aa
+1VR5	#00a25f	peptide
+1WDN	#bcacd7	neg charged aa
+1WOD	#cb3d2b	metal
+1XOC	#00a25f	peptide
+1XS5	#8243cf	non-polar aa
+1XT8	#6babc9	polar aa
+1XVL	#cb3d2b	metal
+1XVX	#cb3d2b	metal
+1XVY	#cb3d2b	metal
+1Y3P	#e470de	sugar
+1Y4T	#cb3d2b	metal
+1Y9U	#cb3d2b	metal
+1YK0	#00a25f	peptide
+1Z16	#8243cf	non-polar aa
+1ZBM	#5a5a5b	n.d.
+1ZHH	#5a5a5b	n.d.
+1ZTY	#00a25f	peptide
+2A5T	#bcacd7	neg charged aa
+2B3B	#e470de	sugar
+2B4L	#607cca	special aa
+2CEX	#e470de	sugar
+2CHU	#5a5a5b	n.d.
+2CZL	#5a5a5b	n.d.
+2D5W	#00a25f	peptide
+2DVZ	#bcacd7	neg charged aa
+2E4U	#bcacd7	neg charged aa
+2E4Z	#bcacd7	neg charged aa
+2ETV	#cb3d2b	metal
+2F34	#bcacd7	neg charged aa
+2F5X	#bcacd7	neg charged aa
+2FN9	#e470de	sugar
+2FNC	#e470de	sugar
+2FQX	#5a5a5b	n.d.
+2FVY	#e470de	sugar
+2FYI	#5a5a5b	n.d.
+2G29	#006cb4	N
+2GH9	#e470de	sugar
+2GHA	#e470de	sugar
+2H0A	#5a5a5b	n.d.
+2H5Y	#cb3d2b	metal
+2HEU	#e470de	sugar
+2HPG	#5a5a5b	n.d.
+2HQB	#5a5a5b	n.d.
+2HXR	#006cb4	N
+2HXW	#e470de	sugar
+2HZL	#5a5a5b	n.d.
+2I48	#5a5a5b	n.d.
+2IA4	#3c425d	unclassified aa
+2IEE	#5a5a5b	n.d.
+2IOY	#e470de	sugar
+2O1M	#6babc9	polar aa
+2O7I	#00a25f	peptide
+2ONR	#cb3d2b	metal
+2OZZ	#5a5a5b	n.d.
+2PFY	#bcacd7	neg charged aa
+2PFZ	#bcacd7	neg charged aa
+2PRS	#cb3d2b	metal
+2PT2	#cb3d2b	metal
+2PVU	#ab72d1	pos charged aa
+2PYY	#bcacd7	neg charged aa
+2Q88	#6babc9	polar aa
+2Q8P	#cb3d2b	metal
+2QL3	#5a5a5b	n.d.
+2QPQ	#5a5a5b	n.d.
+2QRY	#bdab22	vitamin
+2QU7	#5a5a5b	n.d.
+2QVC	#e470de	sugar
+2R79	#cb3d2b	metal
+2RC7	#bcacd7	neg charged aa
+2RCA	#bcacd7	neg charged aa
+2REG	#bdab22	vitamin
+2RG7	#cb3d2b	metal
+2RJO	#5a5a5b	n.d.
+2UVG	#e470de	sugar
+2UVI	#e470de	sugar
+2V25	#bcacd7	neg charged aa
+2V3Q	#859200	P
+2V3T	#bcacd7	neg charged aa
+2V84	#006cb4	N
+2VK2	#e470de	sugar
+2VP1	#cb3d2b	metal
+2VPO	#007a25	osmolyte
+2W7Y	#e470de	sugar
+2WHY	#cb3d2b	metal
+2WJW	#bcacd7	neg charged aa
+2WOK	#00a25f	peptide
+2X26	#e4d137	S
+2X4L	#cb3d2b	metal
+2X7P	#5a5a5b	n.d.
+2X7X	#e470de	sugar
+2XD2	#e470de	sugar
+2XH8	#cb3d2b	metal
+2XHD	#bcacd7	neg charged aa
+2Y7I	#ab72d1	pos charged aa
+2YJP	#6babc9	polar aa
+2YLN	#6babc9	polar aa
+2Z22	#859200	P
+2Z23	#00a25f	peptide
+2Z8D	#e470de	sugar
+2ZYK	#e470de	sugar
+2ZZV	#e470de	sugar
+3B50	#e470de	sugar
+3BE6	#cb3d2b	metal
+3BRS	#e470de	sugar
+3C9H	#cb3d2b	metal
+3CFX	#cb3d2b	metal
+3CFZ	#cb3d2b	metal
+3CG1	#cb3d2b	metal
+3CG3	#cb3d2b	metal
+3CLK	#5a5a5b	n.d.
+3CVG	#cb3d2b	metal
+3CX3	#cb3d2b	metal
+3D02	#e470de	sugar
+3DEL	#ab72d1	pos charged aa
+3DLN	#bcacd7	neg charged aa
+3DRF	#00a25f	peptide
+3E4R	#e4d137	S
+3EAF	#5a5a5b	n.d.
+3EIW	#cb3d2b	metal
+3EJW	#e470de	sugar
+3FAT	#bcacd7	neg charged aa
+3FXB	#007a25	osmolyte
+3G1W	#e470de	sugar
+3G85	#5a5a5b	n.d.
+3GBV	#5a5a5b	n.d.
+3GFV	#cb3d2b	metal
+3GI1	#cb3d2b	metal
+3GXA	#8243cf	non-polar aa
+3GYB	#5a5a5b	n.d.
+3H5L	#482b77	branched aa
+3H75	#e470de	sugar
+3H7M	#5a5a5b	n.d.
+3HH8	#cb3d2b	metal
+3HJT	#cb3d2b	metal
+3HN0	#006cb4	N
+3HUT	#482b77	branched aa
+3HV1	#6babc9	polar aa
+3HXP	#cb3d2b	metal
+3I09	#482b77	branched aa
+3I3V	#5a5a5b	n.d.
+3I45	#5a5a5b	n.d.
+3I6V	#3c425d	unclassified aa
+3IP5	#3c425d	unclassified aa
+3IX1	#f1d26c	pyrimidine
+3JYR	#e470de	sugar
+3K01	#e470de	sugar
+3K2D	#8243cf	non-polar aa
+3K4U	#3c425d	unclassified aa
+3K6U	#cb3d2b	metal
+3K9C	#5a5a5b	n.d.
+3KKE	#5a5a5b	n.d.
+3KS9	#bcacd7	neg charged aa
+3KSM	#e470de	sugar
+3KZG	#ab72d1	pos charged aa
+3L49	#e470de	sugar
+3L6H	#007a25	osmolyte
+3L6U	#e470de	sugar
+3LKB	#482b77	branched aa
+3LMK	#bcacd7	neg charged aa
+3LOP	#5a5a5b	n.d.
+3LR1	#cb3d2b	metal
+3M8U	#cb3d2b	metal
+3M9W	#e470de	sugar
+3MD9	#cb3d2b	metal
+3MFQ	#cb3d2b	metal
+3MIZ	#5a5a5b	n.d.
+3MPK	#5a5a5b	n.d.
+3MQ4	#bcacd7	neg charged aa
+3MST	#006cb4	N
+3MWF	#cb3d2b	metal
+3N5L	#859200	P
+3O66	#607cca	special aa
+3O9P	#00a25f	peptide
+3OEK	#bcacd7	neg charged aa
+3OLZ	#bcacd7	neg charged aa
+3OM0	#bcacd7	neg charged aa
+3OMB	#5a5a5b	n.d.
+3OO6	#e470de	sugar
+3P7I	#859200	P
+3PPN	#607cca	special aa
+3PSA	#cb3d2b	metal
+3PU5	#5a5a5b	n.d.
+3QAX	#ab72d1	pos charged aa
+3QEK	#5a5a5b	n.d.
+3QUF	#5a5a5b	n.d.
+3R5S	#cb3d2b	metal
+3R6U	#bdab22	vitamin
+3ROT	#e470de	sugar
+3RPW	#5a5a5b	n.d.
+3RQT	#5a5a5b	n.d.
+3RY3	#5a5a5b	n.d.
+3S99	#1cefc3	purine
+3S9E	#bcacd7	neg charged aa
+3SAJ	#bcacd7	neg charged aa
+3SG0	#006cb4	N
+3T66	#cb3d2b	metal
+3T95	#5a5a5b	n.d.
+3TCF	#00a25f	peptide
+3TD9	#482b77	branched aa
+3TEF	#cb3d2b	metal
+3TLK	#cb3d2b	metal
+3TMG	#607cca	special aa
+3TNY	#cb3d2b	metal
+3TPA	#cb3d2b	metal
+3TQL	#ab72d1	pos charged aa
+3TQW	#8243cf	non-polar aa
+3TTL	#006cb4	N
+3TTM	#006cb4	N
+3U65	#5a5a5b	n.d.
+3UIF	#e4d137	S
+3UK0	#006cb4	N
+3UKJ	#006cb4	N
+3UN6	#5a5a5b	n.d.
+3UOR	#e470de	sugar
+3UP9	#8243cf	non-polar aa
+3URM	#e470de	sugar
+3VV5	#3c425d	unclassified aa
+3VXB	#e470de	sugar
+3ZKK	#e470de	sugar
+3ZS6	#00a25f	peptide
+4AB5	#5a5a5b	n.d.
+4AQ4	#5a5a5b	n.d.
+4BBP	#cb3d2b	metal
+4C0R	#6babc9	polar aa
+4CL2	#cb3d2b	metal
+4ECF	#859200	P
+4EDP	#5a5a5b	n.d.
+4EF1	#8243cf	non-polar aa
+4ELO	#cb3d2b	metal
+4EQ7	#006cb4	N
+4EQ9	#e4d137	S
+4EQB	#006cb4	N
+4EVQ	#5a5a5b	n.d.
+4EVS	#006cb4	N
+4EXL	#859200	P
+4EY3	#5a5a5b	n.d.
+4F06	#5a5a5b	n.d.
+4F11	#5a5a5b	n.d.
+4F18	#859200	P
+4F3P	#bcacd7	neg charged aa
+4F3S	#8243cf	non-polar aa
+4FAJ	#00a25f	peptide
+4FNA	#cb3d2b	metal
+4G68	#5a5a5b	n.d.
+4GD5	#859200	P
+4GL0	#006cb4	N
+4GL8	#00a25f	peptide
+4GNR	#482b77	branched aa
+4GOT	#8243cf	non-polar aa
+4GVO	#6babc9	polar aa
+4H1X	#859200	P
+4H5F	#3c425d	unclassified aa
+4HMO	#cb3d2b	metal
+4HN9	#cb3d2b	metal
+4HS7	#5a5a5b	n.d.
+4I1D	#006cb4	N
+4I62	#3c425d	unclassified aa
+4IIL	#bdab22	vitamin
+4INO	#cb3d2b	metal
+4IO2	#bcacd7	neg charged aa
+4IRX	#bdab22	vitamin
+4JB0	#006cb4	N
+4JCC	#cb3d2b	metal
+4JOQ	#e470de	sugar
+4JWO	#859200	P
+4K3F	#5a5a5b	n.d.
+4K3V	#cb3d2b	metal
+4KD5	#cb3d2b	metal
+4KQ9	#e470de	sugar
+4KQC	#5a5a5b	n.d.
+4KV7	#8243cf	non-polar aa
+4KVF	#e470de	sugar
+4KZK	#e470de	sugar
+4LA9	#bcacd7	neg charged aa
+4LJS	#5a5a5b	n.d.
+4LN5	#5a5a5b	n.d.
+4LQ2	#5a5a5b	n.d.
+4LVQ	#859200	P
+4M7O	#cb3d2b	metal
+4M88	#3c425d	unclassified aa
+4MAG	#e470de	sugar
+4MBP	#e470de	sugar
+4MCO	#e470de	sugar
+4MDY	#5a5a5b	n.d.
+4MF3	#bcacd7	neg charged aa
+4MFI	#5a5a5b	n.d.
+4MIJ	#e470de	sugar
+4MLC	#5a5a5b	n.d.
+4MLZ	#5a5a5b	n.d.
+4MMP	#e470de	sugar
+4MNC	#007a25	osmolyte
+4MNP	#e470de	sugar
+4MO9	#5a5a5b	n.d.
+4MQE	#5a5a5b	n.d.
+4MX6	#e470de	sugar
+4MX8	#5a5a5b	n.d.
+4N01	#5a5a5b	n.d.
+4N03	#482b77	branched aa
+4N0Q	#8243cf	non-polar aa
+4N13	#859200	P
+4N15	#e470de	sugar
+4N4U	#5a5a5b	n.d.
+4N6D	#5a5a5b	n.d.
+4N6K	#5a5a5b	n.d.
+4N8G	#00a25f	peptide
+4N8Y	#e470de	sugar
+4N91	#e470de	sugar
+4ND9	#607cca	special aa
+4NF0	#e470de	sugar
+4NG7	#5a5a5b	n.d.
+4NGU	#00a25f	peptide
+4NHB	#859200	P
+4NMY	#bdab22	vitamin
+4NN3	#5a5a5b	n.d.
+4NQ8	#bdab22	vitamin
+4NQR	#3c425d	unclassified aa
+4NTL	#5a5a5b	n.d.
+4NX1	#e470de	sugar
+4O7M	#e470de	sugar
+4O8M	#e470de	sugar
+4O94	#e470de	sugar
+4OAN	#bdab22	vitamin
+4OEN	#3c425d	unclassified aa
+4OER	#cb3d2b	metal
+4OET	#00a25f	peptide
+4OHN	#6babc9	polar aa
+4OMB	#859200	P
+4ONY	#5a5a5b	n.d.
+4OVJ	#5a5a5b	n.d.
+4OVK	#5a5a5b	n.d.
+4OVQ	#e470de	sugar
+4OVR	#e470de	sugar
+4OVS	#e470de	sugar
+4OVT	#e470de	sugar
+4OXQ	#cb3d2b	metal
+4P0I	#5a5a5b	n.d.
+4P1E	#5a5a5b	n.d.
+4P3L	#e470de	sugar
+4P47	#5a5a5b	n.d.
+4P56	#e470de	sugar
+4P8B	#bdab22	vitamin
+4P98	#5a5a5b	n.d.
+4P9K	#e470de	sugar
+4PAF	#5a5a5b	n.d.
+4PAG	#5a5a5b	n.d.
+4PAK	#bdab22	vitamin
+4PBQ	#e470de	sugar
+4PC9	#e470de	sugar
+4PDD	#e470de	sugar
+4PDH	#e470de	sugar
+4PE3	#5a5a5b	n.d.
+4PE6	#5a5a5b	n.d.
+4PET	#5a5a5b	n.d.
+4PEV	#5a5a5b	n.d.
+4PF6	#e470de	sugar
+4PF8	#e470de	sugar
+4PFB	#859200	P
+4PFI	#5a5a5b	n.d.
+4PFR	#5a5a5b	n.d.
+4PGN	#5a5a5b	n.d.
+4PM4	#cb3d2b	metal
+4PRS	#ab72d1	pos charged aa
+4PZ0	#5a5a5b	n.d.
+4Q5T	#5a5a5b	n.d.
+4Q6W	#8243cf	non-polar aa
+4QBA	#e470de	sugar
+4QFK	#00a25f	peptide
+4QHQ	#8243cf	non-polar aa
+4QRZ	#e470de	sugar
+4R2B	#e470de	sugar
+4R2F	#e470de	sugar
+4R6H	#5a5a5b	n.d.
+4R6K	#5a5a5b	n.d.
+4R6Y	#5a5a5b	n.d.
+4R72	#5a5a5b	n.d.
+4R9F	#e470de	sugar
+4RA1	#e470de	sugar
+4RK0	#e470de	sugar
+4RK1	#e470de	sugar
+4RK2	#e470de	sugar
+4RK9	#e470de	sugar
+4RSM	#e470de	sugar
+4RU0	#482b77	branched aa
+4RU1	#e470de	sugar
+4RXL	#cb3d2b	metal
+4RXM	#e470de	sugar
+4RXT	#e470de	sugar
+4RXU	#e470de	sugar
+4RY1	#5a5a5b	n.d.
+4RY8	#5a5a5b	n.d.
+4RY9	#5a5a5b	n.d.
+4RYA	#e470de	sugar
+4UA8	#e470de	sugar
+4UAB	#5a5a5b	n.d.
+4WED	#5a5a5b	n.d.
+4WEP	#607cca	special aa
+4WT7	#e470de	sugar
+4WUT	#e470de	sugar
+4WWH	#e470de	sugar
+4WXJ	#bcacd7	neg charged aa
+4WZZ	#e470de	sugar
+4X8R	#e470de	sugar
+4X9T	#5a5a5b	n.d.
+4XAQ	#bcacd7	neg charged aa
+4XAR	#bcacd7	neg charged aa
+4XEQ	#bdab22	vitamin
+4XFE	#e470de	sugar
+4XFK	#482b77	branched aa
+4XRV	#cb3d2b	metal
+4XZ6	#607cca	special aa
+4Y9T	#e470de	sugar
+4YAH	#8243cf	non-polar aa
+4YHS	#e470de	sugar
+4YIC	#5a5a5b	n.d.
+4YKI	#bcacd7	neg charged aa
+4YLE	#5a5a5b	n.d.
+4YMX	#3c425d	unclassified aa
+4YO7	#e470de	sugar
+4YS6	#5a5a5b	n.d.
+4YV7	#5a5a5b	n.d.
+4YWH	#e470de	sugar
+4Z0N	#5a5a5b	n.d.
+4Z7E	#5a5a5b	n.d.
+4Z9N	#3c425d	unclassified aa
+4ZDM	#bcacd7	neg charged aa
+4ZEF	#bcacd7	neg charged aa
+4ZJP	#e470de	sugar
+4ZPJ	#5a5a5b	n.d.
+4ZS9	#e470de	sugar
+5BQ3	#e470de	sugar
+5BRA	#e470de	sugar
+5BWJ	#5a5a5b	n.d.
+5CI5	#e470de	sugar
+5CM6	#5a5a5b	n.d.
+5CR9	#cb3d2b	metal
+5DH0	#cb3d2b	metal
+5DKV	#e470de	sugar
+5DTE	#e470de	sugar
+5DVF	#e470de	sugar
+5E7U	#e470de	sugar
+5EWJ	#bcacd7	neg charged aa
+5EYF	#bcacd7	neg charged aa
+5F1Q	#00a25f	peptide
+5FLY	#cb3d2b	metal
+5FTH	#bcacd7	neg charged aa
+5H8F	#bcacd7	neg charged aa
+5HKO	#e470de	sugar
+5HQJ	#e470de	sugar
+5HSG	#5a5a5b	n.d.
+5HX7	#cb3d2b	metal
+5I84	#859200	P
+5IAI	#e470de	sugar
+5IBQ	#e470de	sugar
+5IM2	#5a5a5b	n.d.
+5ISU	#5a5a5b	n.d.
+5IX8	#e470de	sugar
+5IXP	#5a5a5b	n.d.
+5JK4	#859200	P
+BU310722	#006cb4	N
+BU313432	#5a5a5b	n.d.
+93110114	#e470de	sugar
+93110247	#5a5a5b	n.d.
+93110386	#5a5a5b	n.d.
+93110634	#482b77	branched aa
+93110939	#00a25f	peptide
+93111190	#6babc9	polar aa
+93111287	#5a5a5b	n.d.
+93111402	#e470de	sugar
+93111499	#cb3d2b	metal
+93111513	#006cb4	N
+93111545	#cb3d2b	metal
+93111670	#859200	P
+93111747	#cb3d2b	metal
+93111758	#cb3d2b	metal
+93112119	#5a5a5b	n.d.
+93112366	#3c425d	unclassified aa
+93112386	#5a5a5b	n.d.
+93112631	#482b77	branched aa
+93112776	#e470de	sugar
+93112811	#5a5a5b	n.d.
+93112819	#859200	P
+93112872	#006cb4	N
+93112920	#859200	P
+96051096	#859200	P
+96051171	#5a5a5b	n.d.
+96051294	#859200	P
+96052559	#5a5a5b	n.d.
+99020152	#e470de	sugar
+99020235	#5a5a5b	n.d.
+99020599	#3c425d	unclassified aa
+99020702	#00a25f	peptide
+99020847	#6babc9	polar aa
+99021010	#cb3d2b	metal
+99021078	#e470de	sugar
+99021183	#859200	P
+99021234	#5a5a5b	n.d.
+99021313	#5a5a5b	n.d.
+99021364	#cb3d2b	metal
+99021761	#5a5a5b	n.d.
+99021818	#5a5a5b	n.d.
+99022002	#cb3d2b	metal
+99022017	#5a5a5b	n.d.
+99022214	#5a5a5b	n.d.
+99022250	#006cb4	N
+92200121	#e470de	sugar
+92200259	#5a5a5b	n.d.
+92200388	#607cca	special aa
+92200407	#5a5a5b	n.d.
+92200996	#00a25f	peptide
+92201198	#859200	P
+92201218	#6babc9	polar aa
+92201409	#e470de	sugar
+92201579	#5a5a5b	n.d.
+92201702	#5a5a5b	n.d.
+92201719	#cb3d2b	metal
+92201803	#cb3d2b	metal
+92201815	#cb3d2b	metal
+92201974	#cb3d2b	metal
+92202374	#5a5a5b	n.d.
+92202624	#3c425d	unclassified aa
+92202646	#5a5a5b	n.d.
+92203010	#e470de	sugar
+92203043	#5a5a5b	n.d.
+92203051	#5a5a5b	n.d.
+92203122	#859200	P
+PSSM2248	#5a5a5b	n.d.
+SH1080	#3c425d	unclassified aa
+SH0147	#5a5a5b	n.d.
+SH0201	#5a5a5b	n.d.
+SH0267	#e470de	sugar
+SH0268	#e470de	sugar
+SH0271	#5a5a5b	n.d.
+SH0371	#5a5a5b	n.d.
+SH0655	#3c425d	unclassified aa
+SH0658	#5a5a5b	n.d.
+SH0659	#3c425d	unclassified aa
+SH0769	#e470de	sugar
+SH0772	#e470de	sugar
+SH0797	#5a5a5b	n.d.
+SH0798	#607cca	special aa
+SH0806	#e4d137	S
+SH0807	#e4d137	S
+SH0812	#74d44b	ATP
+SH0850	#74d44b	ATP
+SH0905	#74d44b	ATP
+SH0953	#5a5a5b	n.d.
+SH0957	#74d44b	ATP
+SH1068	#5a5a5b	n.d.
+SH1176	#859200	P
+SH1210	#5a5a5b	n.d.
+SH1236	#cb3d2b	metal
+SH1238	#cb3d2b	metal
+SH1298	#607cca	special aa
+SH1302	#607cca	special aa
+SH1336	#006cb4	N
+SH1337	#74d44b	ATP
+SH1346	#5a5a5b	n.d.
+SH1351	#74d44b	ATP
+SH1352	#74d44b	ATP
+SH1357	#74d44b	ATP
+SH1358	#74d44b	ATP
+SH1361	#3c425d	unclassified aa
+SG300122	#859200	P
+SG300185	#74d44b	ATP
+SG300186	#859200	P
+SG300188	#5a5a5b	n.d.
+SG300190	#cb3d2b	metal
+SG300197	#859200	P
+SG300270	#5a5a5b	n.d.
+SG300311	#74d44b	ATP
+SG300595	#74d44b	ATP
+SG300662	#cb3d2b	metal
+SG300788	#3c425d	unclassified aa
+SG300791	#3c425d	unclassified aa
+SG300792	#3c425d	unclassified aa
+SG300912	#859200	P
+SG301000	#5a5a5b	n.d.
+SG301030	#74d44b	ATP
+SG301077	#bcacd7	neg charged aa
+SG301318	#74d44b	ATP
+SG301345	#74d44b	ATP
+SG301364	#607cca	special aa
+SG301368	#cb3d2b	metal
+SG301372	#cb3d2b	metal
+SG301376	#cb3d2b	metal
+SG301406	#5a5a5b	n.d.
+81020125	#e470de	sugar
+81020212	#5a5a5b	n.d.
+81020374	#006cb4	N
+81020606	#3c425d	unclassified aa
+81020607	#3c425d	unclassified aa
+81020709	#00a25f	peptide
+81020840	#6babc9	polar aa
+81020971	#cb3d2b	metal
+81021018	#5a5a5b	n.d.
+81021111	#5a5a5b	n.d.
+81021170	#859200	P
+81021282	#e470de	sugar
+81021286	#859200	P
+81021341	#cb3d2b	metal
+81021415	#006cb4	N
+81021797	#cb3d2b	metal
+81021815	#5a5a5b	n.d.
+81021868	#5a5a5b	n.d.
+81021917	#607cca	special aa
+81021920	#5a5a5b	n.d.
+81022133	#5a5a5b	n.d.
+81022442	#006cb4	N
+81022481	#cb3d2b	metal
+81022487	#e470de	sugar
+81022507	#859200	P
+81026481	#5a5a5b	n.d.
+81090131	#e470de	sugar
+81090201	#5a5a5b	n.d.
+81090330	#5a5a5b	n.d.
+81090570	#5a5a5b	n.d.
+81090659	#5a5a5b	n.d.
+81090877	#6babc9	polar aa
+81091056	#cb3d2b	metal
+81091173	#cb3d2b	metal
+81091255	#e470de	sugar
+81091378	#5a5a5b	n.d.
+81091394	#859200	P
+81091445	#5a5a5b	n.d.
+81091542	#5a5a5b	n.d.
+81092054	#00a25f	peptide
+81092679	#006cb4	N
+C0926319	#cb3d2b	metal
