@@ -1,4 +1,3 @@
-# DATA
 ## 56624_norm
 Normalised gene abundances for all unique 56,624 putative SBP genes.
 
